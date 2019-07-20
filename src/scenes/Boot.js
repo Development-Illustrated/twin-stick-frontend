@@ -1,22 +1,28 @@
 import Phaser from "phaser";
-import logoImg from "../assets/logo.png";
+import playerImg from "../assets/player.png";
+import Player from "../sprites/Player";
 
 class BootScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: 'BootScene'
+    })
+  }
   preload() {
-    this.load.image("logo", logoImg);
+    this.load.image("player", playerImg);
   }
 
   create() {
-    const logo = this.add.image(400, 150, "logo");
+    this.player = new Player({
+      scene: this,
+      x: 150,
+      y: 150
+    })
+    this.player.create()
+  }
 
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1
-    });
+  update() {
+    this.player.update()
   }
 }
 

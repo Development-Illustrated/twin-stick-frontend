@@ -7,8 +7,15 @@ var config = {
   parent: "content",
   width: 800,
   height: 700,
-  zoom: 3,
-  scene: [GameScene]
+  scene: [BootScene, GameScene],
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { x: 0, y: 0 }
+    }
+  },
+  pixelArt: true,
+  roundPixels: true
 };
 
 window.game = new Phaser.Game(config);

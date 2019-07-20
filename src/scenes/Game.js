@@ -1,6 +1,11 @@
 import Phaser from "phaser";
 
 class GameScene extends Phaser.Scene {
+    constructor() {
+        super({
+            key: 'GameScene'
+        })
+    }
     preload() {
         this.load.image("groundTiles", "../src/assets/tilesets/galletcity_tiles.png");
         this.load.tilemapTiledJSON('crossroads', '../src/assets/tilesets/tilemap.json');
