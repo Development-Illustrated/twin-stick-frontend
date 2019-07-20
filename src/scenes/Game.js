@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import enemyImg from "../assets/images/enemy.png";
 import playerImg from "../assets/images/player.png";
+import bulletImg from "../assets/images/tile.png";
 import Player from "../sprites/Player";
 import Enemy from "../sprites/Enemy";
 
@@ -19,6 +20,7 @@ class GameScene extends Phaser.Scene {
 
         this.load.image("enemy", enemyImg);
         this.load.image("player", playerImg);
+        this.load.image("bullet", bulletImg);
 
     }
     create() {
