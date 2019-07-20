@@ -8,7 +8,7 @@ var config = {
   parent: "content",
   width: 800,
   height: 700,
-  scene: [BootScene, GameScene],
+  scene: [GameScene],
   physics: {
     default: "arcade",
     arcade: {
