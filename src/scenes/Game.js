@@ -29,6 +29,8 @@ class GameScene extends Phaser.Scene {
     );
     this.load.image("bullet", bulletImg);
 
+    this.load.audio("background_music", "src/assets/audio/Creepy-Action.mp3", "../assets/audio/Creepy-Action.ogg")
+
     this.load.spritesheet("enemy", enemySprites, {
       frameWidth: 20,
       frameHeight: 32,
@@ -49,6 +51,14 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
     this.buildingLayer.setCollisionBetween(89, 89);
+
+    //Set music
+    var music = this.sound.add("background_music")
+    music.play({
+      volume: 0.3,
+      autoplay: true,
+      loop: true
+    })
 
     this.player = new Player({
       scene: this,
@@ -92,11 +102,11 @@ class GameScene extends Phaser.Scene {
 
     // Camera
     // set bounds so the camera won't go outside the game world
-    // this.cameras.main
-    //   .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
-    //   .setZoom(4);
-    // // make the camera follow the player
-    // this.cameras.main.startFollow(this.player);
+    this.cameras.main
+      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+      .setZoom(4);
+    // make the camera follow the player
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {
