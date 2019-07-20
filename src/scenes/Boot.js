@@ -9,8 +9,11 @@ import playerImg from "../assets/player.png";
 class BootScene extends Phaser.Scene {
   constructor() {
     super({
-      key: 'BootScene'
-    })
+      key: "BootScene"
+    });
+
+    this.currentEnemies = 0;
+    this.MAX_ENEMIES = 1;
   }
 
   preload() {
@@ -30,12 +33,15 @@ class BootScene extends Phaser.Scene {
     this.time.addEvent({
       delay: 100,
       callback: function() {
-        var enemy = new Enemy({
-          scene: this,
-          x: Phaser.Math.Between(0, this.sys.game.canvas.width),
-          y: Phaser.Math.Between(0, this.sys.game.canvas.height)
-        });
-        this.enemies.add(enemy);
+        if (this.currentEnemies <= this.MAX_ENEMIES - 1) {
+          var enemy = new Enemy({
+            scene: this,
+            x: Phaser.Math.Between(0, this.sys.game.canvas.width),
+            y: Phaser.Math.Between(0, this.sys.game.canvas.height)
+          });
+          this.enemies.add(enemy);
+          this.currentEnemies = this.currentEnemies + 1;
+        }
       },
       callbackScope: this,
       loop: true
