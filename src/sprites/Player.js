@@ -31,7 +31,8 @@ class Player extends Phaser.GameObjects.Sprite {
       Phaser.Input.Keyboard.KeyCodes.SPACE
     )
 
-    this.weapon = new Weapon()
+    this.weapon = new Weapon(this.scene)
+    this.weapon.create()
 
     this.gamePad = this.scene.input.gamepad1
   }
@@ -55,6 +56,7 @@ class Player extends Phaser.GameObjects.Sprite {
     if (this.space.isDown) {
       this.weapon.fire(this.x, this.y)
     }
+
     if(!this.gamePad){
       try {
         this.gamePad = this.scene.input.gamepad.pad1
