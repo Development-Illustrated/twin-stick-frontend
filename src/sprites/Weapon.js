@@ -60,7 +60,9 @@ var Weapon = new Phaser.Class({
         this.damageCharacter
       );
       bullet.fire(player, crosshair);
-      this.gunSound.play()
+      this.gunSound.play({
+        volume: 0.1
+      })
     }
   },
 
