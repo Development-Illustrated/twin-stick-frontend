@@ -13,6 +13,8 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   create() {
+    this.body.setCollideWorldBounds(true);
+
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
     );

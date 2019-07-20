@@ -35,8 +35,6 @@ class GameScene extends Phaser.Scene {
             y: 300
         });
         this.player.create();
-        this.player.body.setCollideWorldBounds(true);
-﻿        this.player.onWorldBounds = true;
 
         this.enemies = this.add.group();
         this.time.addEvent({
