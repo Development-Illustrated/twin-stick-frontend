@@ -13,10 +13,10 @@ RUN apk add nginx && \
     npm run build && \
     apk del nodejs && \
     apk del npm && \
-    mv /var/www/localhost/htdocs/build /var/www/localhost && \
+    mv /var/www/localhost/htdocs/dist /var/www/localhost && \
     cd /var/www/localhost/htdocs && \
     rm -rf * && \
-    mv /var/www/localhost/build /var/www/localhost/htdocs;
+    mv /var/www/localhost/dist /var/www/localhost/htdocs;
 
 
 CMD ["/bin/sh", "-c", "exec nginx -g 'daemon off;';"]
