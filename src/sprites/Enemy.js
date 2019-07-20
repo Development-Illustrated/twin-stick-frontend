@@ -6,6 +6,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
+    this.health = 2
   }
 
   update() {

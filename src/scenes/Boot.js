@@ -13,7 +13,7 @@ class BootScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 1;
+    this.MAX_ENEMIES = 5;
   }
 
   preload() {
