@@ -13,6 +13,11 @@ class BootScene extends Phaser.Scene {
       x: 150,
       y: 150
     })
+    this.player.create()
+  }
+
+  update() {
+    this.player.update()
   }
 }
 
