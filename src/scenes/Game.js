@@ -28,8 +28,6 @@ class GameScene extends Phaser.Scene {
         this.wallsLayer = map.createDynamicLayer('Tile Layer 2', [groundTiles]);
         map.setCollisionByExclusion([0], true, this.wallsLayer);
 
-        this.bgLayer.resizeWorld();
-
 
         this.player = new Player({
             scene: this,
