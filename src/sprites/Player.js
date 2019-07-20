@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import Weapon from "./Weapon";
 
+var gamePad;
+
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
     super(scene, x, y, "player");
@@ -8,7 +10,7 @@ class Player extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
 
-    this.PLAYER_VELOCITY = 100;
+    this.PLAYER_VELOCITY = 50;
   }
 
   create() {
