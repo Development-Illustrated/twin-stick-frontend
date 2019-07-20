@@ -58,7 +58,7 @@ class Player extends Phaser.GameObjects.Sprite {
       var crosshair = this
       this.weapon.fireWeapon(this, crosshair, Date.now())
     }
-    
+
     if(!this.gamePad){
       try {
         this.gamePad = this.scene.input.gamepad.pad1;

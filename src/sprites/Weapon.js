@@ -7,6 +7,18 @@ var Weapon = new Phaser.Class({
     this.bullet = Bullet
   },
 
+  damageCharacter: function(characterHit, bulletHit) {
+    if (bulletHit.active === true && characterHit.active === true) {
+      characterHit.health = characterHit.health - bulletHit.damage
+      console.log("Enemy health:", characterHit.health)
+      if (characterHit.health <= 0) {
+        characterHit.destroy()
+      }
+
+      bulletHit.destroy()
+    }
+  },
+
   create: function() {
     this.playerBullets = this.scene.physics.add.group({ classType: this.bullet, runChildUpdate: true })
   },
@@ -22,10 +34,11 @@ var Weapon = new Phaser.Class({
     }
 
     if (bullet) {
-        var target = {x: player.x - 100, y: player.y}
-        player.lastFired = time
-        bullet.fire(player, target)
-        // bullet.fire(player, crosshair)
+      var target = {x: player.x - 100, y: player.y}
+      player.lastFired = time
+      bullet.fire(player, target)
+      this.scene.physics.add.collider(this.scene.enemies, bullet, this.damageCharacter);
+      // bullet.fire(player, crosshair)
     }
   },
 

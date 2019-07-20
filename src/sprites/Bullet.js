@@ -11,6 +11,7 @@ var Bullet = new Phaser.Class({
     this.xSpeed = 0
     this.ySpeed = 0
     this.setSize(12, 12, true)
+    this.damage = 1
   },
 
   fire: function (shooter, target) {
