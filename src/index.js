@@ -6,8 +6,8 @@ import GameScene from "./scenes/Game";
 var config = {
   type: Phaser.WEBGL,
   parent: "content",
-  width: 800,
-  height: 700,
+  width: 1600,
+  height: 800,
   input: {
     gamepad: true
   },
