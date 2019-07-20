@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 5;
+    this.MAX_ENEMIES = 50;
   }
 
   preload() {
@@ -62,9 +62,9 @@ class GameScene extends Phaser.Scene {
 
     this.enemies = this.add.group();
     this.time.addEvent({
-      delay: 100,
+      delay: Phaser.Math.Between(250, 300),
       callback: function() {
-        if (this.currentEnemies <= this.MAX_ENEMIES - 1) {
+        if (this.enemies.children.size <= this.MAX_ENEMIES - 1) {
           var enemy = new Enemy({
             scene: this,
             x: Phaser.Math.Between(0, this.sys.game.canvas.width),

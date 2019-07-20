@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Bullet from "./Bullet";
 
-const FIRE_RATE = 400;
+const FIRE_RATE = 200;
 
 var Weapon = new Phaser.Class({
   initialize: function Weapon(scene) {
@@ -9,19 +9,19 @@ var Weapon = new Phaser.Class({
     this.bullet = Bullet;
   },
 
-  destroyBullet: function (bullet, building) {
-    bullet.destroy()
+  destroyBullet: function(bullet, building) {
+    bullet.destroy();
   },
 
   damageCharacter: function(characterHit, bulletHit) {
     if (bulletHit.active === true && characterHit.active === true) {
-      characterHit.health = characterHit.health - bulletHit.damage
-      console.log("Enemy health:", characterHit.health)
+      characterHit.health = characterHit.health - bulletHit.damage;
+      console.log("Enemy health:", characterHit.health);
       if (characterHit.health <= 0) {
-        characterHit.destroy()
+        characterHit.destroy();
       }
 
-      bulletHit.destroy()
+      bulletHit.destroy();
     }
   },
 
@@ -44,12 +44,20 @@ var Weapon = new Phaser.Class({
         .setActive(true)
         .setVisible(true);
 
-        this.scene.physics.add.collider(bullet, this.scene.buildingLayer, this.destroyBullet)
+      this.scene.physics.add.collider(
+        bullet,
+        this.scene.buildingLayer,
+        this.destroyBullet
+      );
     }
 
     if (bullet) {
       player.lastFired = time;
-      this.scene.physics.add.collider(this.scene.enemies, bullet, this.damageCharacter);
+      this.scene.physics.add.collider(
+        this.scene.enemies,
+        bullet,
+        this.damageCharacter
+      );
       bullet.fire(player, crosshair);
     }
   },
