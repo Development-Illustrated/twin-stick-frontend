@@ -12,7 +12,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     let dx = this.scene.player.x - this.x;
     let dy = this.scene.player.y - this.y;
     let angle = Math.atan2(dy, dx);
-    let speed = 50;
+    let speed = 35;
 
     this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
 
