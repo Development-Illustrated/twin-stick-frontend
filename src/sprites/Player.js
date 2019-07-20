@@ -74,16 +74,18 @@ class Player extends Phaser.GameObjects.Sprite {
       this.body.velocity.y = (this.gamePad.leftStick.y*this.PLAYER_VELOCITY)
       
       //Use the angle to do the fire method
-      var newAngle = getAngle()
+      var newAngle = this.getAngle()
       
     }
   }
+  
+  getAngle() { 
+    var angle = Math.atan2(this.gamePad.rightStick.x,this.gamePad.rightStick.y) // Radians
+    var degrees = 180*angle/Math.PI; //Degrees
+    return (360+Math.round(degrees))%360; //round number, avoid decimal fragments
+  }
 }
 
-function getAngle(){ 
-  var angle = Math.atan2(this.gamePad.rightStick.y,this.gamePad.rightStick.x) // Radians
-  var degrees = 180*angle/Math.PI; //Degrees
-  return (360+Math.round(degrees))%360; //round number, avoid decimal fragments
-}
+
 
 export default Player;
