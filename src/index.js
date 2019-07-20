@@ -8,7 +8,10 @@ var config = {
   parent: "content",
   width: 800,
   height: 700,
-  scene: [BootScene, GameScene],
+  input: {
+    gamepad: true
+  },
+  scene: [GameScene],
   physics: {
     default: "arcade",
     arcade: {

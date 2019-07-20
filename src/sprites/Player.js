@@ -1,6 +1,8 @@
 import Phaser from 'phaser'
 import Weapon from './Weapon'
 
+var gamePad
+
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
     super(scene, x, y, 'player')
@@ -30,6 +32,8 @@ class Player extends Phaser.GameObjects.Sprite {
     )
 
     this.weapon = new Weapon()
+
+    this.gamePad = this.scene.input.gamepad1
   }
 
   update() {
@@ -50,6 +54,19 @@ class Player extends Phaser.GameObjects.Sprite {
 
     if (this.space.isDown) {
       this.weapon.fire(this.x, this.y)
+    }
+    if(!this.gamePad){
+      try {
+        this.gamePad = this.scene.input.gamepad.pad1
+      } catch (TypeError) {
+        console.log(TypeError)
+        //no gamepad
+      }
+    }
+    else {
+      this.body.velocity.x = (this.gamePad.leftStick.x*this.PLAYER_VELOCITY)
+      this.body.velocity.y = (this.gamePad.leftStick.y*this.PLAYER_VELOCITY)
+      //move the player
     }
   }
 }
