@@ -1,6 +1,5 @@
 import Phaser from "phaser";
-
-var gamePad
+import Math from Math;
 
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
@@ -11,10 +10,12 @@ class Player extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
 
     this.PLAYER_VELOCITY = 100;
-
+    this.PLAYER_ANGULAR_VELOCITY = 45;
+    this.body.allowRotation()
   }
 
   create() {
+   
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
     );
@@ -58,13 +59,21 @@ class Player extends Phaser.GameObjects.Sprite {
       
     }
     else {
+      //Move the player
       this.body.velocity.x = (this.gamePad.leftStick.x*this.PLAYER_VELOCITY)
       this.body.velocity.y = (this.gamePad.leftStick.y*this.PLAYER_VELOCITY)
-      //move the player
+      
+      //Use the angle to do the fire method
+      var newAngle = getAngle()
+      
     }
-    
-   
   }
+}
+
+function getAngle(){ 
+  var angle = Math.atan2(this.gamePad.rightStick.y,this.gamePad.rightStick.x) // Radians
+  var degrees = 180*angle/Math.PI; //Degrees
+  return (360+Math.round(degrees))%360; //round number, avoid decimal fragments
 }
 
 export default Player;
