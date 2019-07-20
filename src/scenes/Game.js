@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 5;
+    this.MAX_ENEMIES = 0;
   }
 
   preload() {
