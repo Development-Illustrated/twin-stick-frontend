@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 
+var gamePad
+
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
     super(scene, x, y, "player");
@@ -25,6 +27,9 @@ class Player extends Phaser.GameObjects.Sprite {
     this.keyD = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.D
     );
+    
+    this.gamePad = this.scene.input.gamepad1
+
   }
 
   update() {
@@ -42,6 +47,23 @@ class Player extends Phaser.GameObjects.Sprite {
     } else {
       this.body.velocity.x = 0;
     }
+    if(!this.gamePad){
+      
+      try {
+        this.gamePad = this.scene.input.gamepad.pad1
+      } catch (TypeError) {
+        console.log(TypeError)
+        //no gamepad
+      }
+      
+    }
+    else {
+      this.body.velocity.x = (this.gamePad.leftStick.x*this.PLAYER_VELOCITY)
+      this.body.velocity.y = (this.gamePad.leftStick.y*this.PLAYER_VELOCITY)
+      //move the player
+    }
+    
+   
   }
 }
 
