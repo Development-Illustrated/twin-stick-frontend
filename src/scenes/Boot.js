@@ -3,8 +3,8 @@ import Phaser from "phaser";
 import Enemy from "../sprites/Enemy";
 import Player from "../sprites/Player";
 
-import enemyImg from "../assets/enemy.png";
-import playerImg from "../assets/player.png";
+import enemyImg from "../assets/images/enemy.png";
+import playerImg from "../assets/images/player.png";
 
 class BootScene extends Phaser.Scene {
   constructor() {
