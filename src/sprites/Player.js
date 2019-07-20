@@ -27,8 +27,7 @@ class Player extends Phaser.GameObjects.Sprite {
       Phaser.Input.Keyboard.KeyCodes.D
     );
     
-    this.gamePad = this.scene.input.gamepad
-
+    this.gamePad = this.scene.input.gamepad1
 
   }
 
@@ -47,8 +46,23 @@ class Player extends Phaser.GameObjects.Sprite {
     } else {
       this.body.velocity.x = 0;
     }
-
-    console.log(this.gamePad.leftStick)
+    if(!this.gamePad){
+      
+      try {
+        this.gamePad = this.scene.input.gamepad.pad1
+      } catch (TypeError) {
+        console.log(TypeError)
+        //no gamepad
+      }
+      
+    }
+    else {
+      this.body.velocity.x = (this.gamePad.leftStick.x*this.PLAYER_VELOCITY)
+      this.body.velocity.y = (this.gamePad.leftStick.y*this.PLAYER_VELOCITY)
+      //move the player
+    }
+    
+   
   }
 }
 
