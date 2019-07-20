@@ -11,22 +11,22 @@ class GameScene extends Phaser.Scene {
         });
 
         this.currentEnemies = 0;
-        this.MAX_ENEMIES = 0;
+        this.MAX_ENEMIES = 5;
     }
     preload() {
-        this.load.image("groundTiles", "../src/assets/tilesets/TileA5_PHC_Exterior-General.png");
-        this.load.tilemapTiledJSON('crossroads', '../src/assets/tilesets/horrormap.json');
+        this.load.image("tile_images", "../src/assets/tilesets/TileA5_PHC_Exterior-General.png");
+        this.load.tilemapTiledJSON('tile_map', '../src/assets/tilesets/horrormap.json');
 
         this.load.image("enemy", enemyImg);
         this.load.image("player", playerImg);
 
     }
     create() {
-        const map = this.make.tilemap({ key: 'crossroads' });
-        const groundTiles = map.addTilesetImage('horrorset', 'groundTiles');
-        this.bgLayer = map.createDynamicLayer('Tile Layer 1', [groundTiles]);
-        this.wallsLayer = map.createDynamicLayer('Tile Layer 2', [groundTiles]);
-        map.setCollisionByExclusion([0], true, this.wallsLayer);
+        const map = this.make.tilemap({ key: 'tile_map' });
+        this.tile_images = map.addTilesetImage('horrorset', 'tile_images');
+        this.bgLayer = map.createDynamicLayer('Tile Layer 1', [this.tile_images]);
+        this.buildingLayer = map.createDynamicLayer('Tile Layer 2', [this.tile_images]);
+        this.buildingLayer.setCollisionBetween(0, 9999);
 
 
         this.player = new Player({
@@ -35,6 +35,8 @@ class GameScene extends Phaser.Scene {
             y: 300
         });
         this.player.create();
+        this.player.body.setCollideWorldBounds(true);
+﻿        this.player.onWorldBounds = true;
 
         this.enemies = this.add.group();
         this.time.addEvent({
@@ -56,6 +58,8 @@ class GameScene extends Phaser.Scene {
 
         this.physics.add.collider(this.player, this.enemies);
         this.physics.add.collider(this.enemies, this.enemies);
+        this.physics.add.collider(this.player, this.buildingLayer);
+        this.physics.add.collider(this.enemies, this.buildingLayer);
 
     }
     update() {
