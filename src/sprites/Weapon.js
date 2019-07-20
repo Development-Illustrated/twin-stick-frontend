@@ -6,6 +6,7 @@ const FIRE_RATE = 200;
 var Weapon = new Phaser.Class({
   initialize: function Weapon(scene) {
     this.scene = scene;
+    this.gunSound = this.scene.sound.add("9mmGun")
     this.bullet = Bullet;
   },
 
@@ -59,6 +60,9 @@ var Weapon = new Phaser.Class({
         this.damageCharacter
       );
       bullet.fire(player, crosshair);
+      this.gunSound.play({
+        volume: 0.1
+      })
     }
   },
 
