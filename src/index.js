@@ -8,6 +8,9 @@ var config = {
   parent: "content",
   width: 800,
   height: 700,
+  input: {
+    gamepad: true
+  },
   scene: [GameScene],
   physics: {
     default: "arcade",
@@ -15,6 +18,7 @@ var config = {
       gravity: { x: 0, y: 0 }
     }
   },
+  zoom: 2,
   pixelArt: true,
   roundPixels: true
 };
