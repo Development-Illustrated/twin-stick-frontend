@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 
 import Enemy from "../sprites/Enemy";
+import Player from "../sprites/Player";
 
-import logoImg from "../assets/logo.png";
 import enemyImg from "../assets/enemy.png";
+import playerImg from "../assets/player.png";
 
 class BootScene extends Phaser.Scene {
   constructor() {
@@ -13,11 +14,17 @@ class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("logo", logoImg);
     this.load.image("enemy", enemyImg);
+    this.load.image("player", playerImg);
   }
 
   create() {
+    this.player = new Player({
+      scene: this,
+      x: 150,
+      y: 150
+    });
+
     this.enemy = new Enemy({
       scene: this,
       x: 125,
