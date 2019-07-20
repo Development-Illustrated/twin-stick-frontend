@@ -29,7 +29,9 @@ class GameScene extends Phaser.Scene {
     );
     this.load.image("bullet", bulletImg);
 
-    this.load.audio("background_music", "src/assets/audio/Creepy-Action.mp3", "../assets/audio/Creepy-Action.ogg")
+    this.load.audio("backgroundMusic", "src/assets/audio/Creepy-Action.mp3", "../assets/audio/Creepy-Action.ogg")
+    this.load.audio("9mmGun", "src/assets/audio/weapons/9_mm_gunshot.mp3", "src/assets/audio/weapons/9_mm_gunshot.ogg")
+    this.load.audio("loudGun", "src/assets/audio/weapons/Gun_loud.mp3", "src/assets/audio/weapons/Gun_loud.ogg")
 
     this.load.spritesheet("enemy", enemySprites, {
       frameWidth: 20,
@@ -51,9 +53,15 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
     this.buildingLayer.setCollisionBetween(0, 9999);
+
+    //Add weapon sounds
+    this.sound.add("9mmGun")
+    this.sound.add("loudGun")
+
     //Set music
-    var music = this.sound.add("background_music")
-    music.play({
+    var backgroundMusic = this.sound.add("backgroundMusic")
+
+    backgroundMusic.play({
       volume: 0.3,
       autoplay: true,
       loop: true
