@@ -52,11 +52,11 @@ class GameScene extends Phaser.Scene {
     this.buildingLayer = map.createDynamicLayer("Tile Layer 2", [
       this.tile_images
     ]);
-    this.buildingLayer.setCollisionBetween(0, 9999);
 
     //Add weapon sounds
     this.sound.add("9mmGun")
     this.sound.add("loudGun")
+    this.buildingLayer.setCollisionBetween(89, 89);
 
     //Set music
     var backgroundMusic = this.sound.add("backgroundMusic")
