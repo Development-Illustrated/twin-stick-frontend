@@ -3,6 +3,11 @@ import playerImg from "../assets/player.png";
 import Player from "../sprites/Player";
 
 class BootScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: 'BootScene'
+    })
+  }
   preload() {
     this.load.image("player", playerImg);
   }

@@ -1,12 +1,13 @@
 import Phaser from "phaser";
 import BootScene from "./scenes/Boot";
+import GameScene from "./scenes/Game";
 
 var config = {
   type: Phaser.AUTO,
   parent: "content",
   width: 800,
   height: 700,
-  scene: [BootScene],
+  scene: [BootScene, GameScene],
   physics: {
     default: "arcade",
     arcade: {
