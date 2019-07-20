@@ -89,6 +89,14 @@ class GameScene extends Phaser.Scene {
 
     let enemyAnimations = new EnemyAnimations(this);
     enemyAnimations.create();
+
+    // Camera
+    // set bounds so the camera won't go outside the game world
+    this.cameras.main
+      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+      .setZoom(4);
+    // make the camera follow the player
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {
