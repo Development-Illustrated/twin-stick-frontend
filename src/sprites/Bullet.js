@@ -14,7 +14,8 @@ var Bullet = new Phaser.Class({
   },
 
   fire: function (shooter, target) {
-    console.log('firing')
+    this.speed = 0.25
+
     this.setPosition(shooter.x, shooter.y)
     this.direction = Math.atan((target.x - this.x) / (target.y - this.y))
 

@@ -15,6 +15,8 @@ class Player extends Phaser.GameObjects.Sprite {
   }
 
   create() {
+    this.lastFired = null
+
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
     )
@@ -54,7 +56,8 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     if (this.space.isDown) {
-      this.weapon.fire(this.x, this.y)
+      var crosshair = this
+      this.weapon.fireWeapon(this, crosshair, Date.now())
     }
 
     if(!this.gamePad){
