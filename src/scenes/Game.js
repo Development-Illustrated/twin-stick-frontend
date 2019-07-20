@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import enemyImg from "../assets/enemy.png";
-import playerImg from "../assets/player.png";
+import enemyImg from "../assets/images/enemy.png";
+import playerImg from "../assets/images/player.png";
 import Player from "../sprites/Player";
 import Enemy from "../sprites/Enemy";
 
