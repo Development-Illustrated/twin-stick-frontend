@@ -9,8 +9,8 @@ import playerImg from "../assets/player.png";
 class BootScene extends Phaser.Scene {
   constructor() {
     super({
-      key: "bootscene"
-    });
+      key: 'BootScene'
+    })
   }
 
   preload() {
@@ -24,6 +24,7 @@ class BootScene extends Phaser.Scene {
       x: this.sys.game.canvas.width / 2,
       y: 300
     });
+    this.player.create();
 
     this.enemies = this.add.group();
     this.time.addEvent({
