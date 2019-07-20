@@ -48,7 +48,7 @@ class GameScene extends Phaser.Scene {
     this.buildingLayer = map.createDynamicLayer("Tile Layer 2", [
       this.tile_images
     ]);
-    this.buildingLayer.setCollisionBetween(0, 9999);
+    this.buildingLayer.setCollisionBetween(89, 89);
 
     this.player = new Player({
       scene: this,
@@ -92,11 +92,11 @@ class GameScene extends Phaser.Scene {
 
     // Camera
     // set bounds so the camera won't go outside the game world
-    this.cameras.main
-      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
-      .setZoom(4);
-    // make the camera follow the player
-    this.cameras.main.startFollow(this.player);
+    // this.cameras.main
+    //   .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+    //   .setZoom(4);
+    // // make the camera follow the player
+    // this.cameras.main.startFollow(this.player);
   }
 
   update() {
