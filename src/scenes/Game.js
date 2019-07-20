@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import playerImg from "../assets/images/player_j.png";
 import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
 import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
-import bulletImg from "../assets/images/tile.png";
+import bulletImg from "../assets/images/bullet.png";
 import Player from "../sprites/Player";
 import Enemy from "../sprites/Enemy";
 import PlayerAnimations from "../animations/player";
@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 5;
+    this.MAX_ENEMIES = 50;
   }
 
   preload() {
@@ -62,9 +62,9 @@ class GameScene extends Phaser.Scene {
 
     this.enemies = this.add.group();
     this.time.addEvent({
-      delay: 100,
+      delay: Phaser.Math.Between(250, 300),
       callback: function() {
-        if (this.currentEnemies <= this.MAX_ENEMIES - 1) {
+        if (this.enemies.children.size <= this.MAX_ENEMIES - 1) {
           var enemy = new Enemy({
             scene: this,
             x: Phaser.Math.Between(0, this.sys.game.canvas.width),
@@ -89,6 +89,14 @@ class GameScene extends Phaser.Scene {
 
     let enemyAnimations = new EnemyAnimations(this);
     enemyAnimations.create();
+
+    // Camera
+    // set bounds so the camera won't go outside the game world
+    this.cameras.main
+      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+      .setZoom(4);
+    // make the camera follow the player
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {
