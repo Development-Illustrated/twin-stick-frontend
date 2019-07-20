@@ -37,8 +37,7 @@ var Weapon = new Phaser.Class({
       var target = {x: player.x - 100, y: player.y}
       player.lastFired = time
       bullet.fire(player, target)
-      this.scene.physics.add.collider(this.scene.enemies, bullet, this.damageCharacter);
-      // bullet.fire(player, crosshair)
+    // bullet.fire(player, crosshair)
     }
   },
 

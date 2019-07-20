@@ -2,7 +2,7 @@ import Phaser from "phaser";
 import playerImg from "../assets/images/player_j.png";
 import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
 import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
-import bulletImg from "../assets/images/tile.png";
+import bulletImg from "../assets/images/bullet.png";
 import Player from "../sprites/Player";
 import Enemy from "../sprites/Enemy";
 import PlayerAnimations from "../animations/player";

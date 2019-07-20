@@ -10,7 +10,8 @@ var Bullet = new Phaser.Class({
     this.direction = 0
     this.xSpeed = 0
     this.ySpeed = 0
-    this.setSize(12, 12, true)
+    this.scaleX = 0.5
+    this.scaleY = 0.5
     this.damage = 1
   },
 
@@ -38,8 +39,7 @@ var Bullet = new Phaser.Class({
 
     this.born += delta
     if (this.born > 1800) {
-      this.setActive(false)
-      this.setVisible(false)
+      this.destroy()
     }
   }
 })
