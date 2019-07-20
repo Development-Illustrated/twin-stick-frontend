@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import Math from Math;
 
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
@@ -11,7 +10,7 @@ class Player extends Phaser.GameObjects.Sprite {
 
     this.PLAYER_VELOCITY = 100;
     this.PLAYER_ANGULAR_VELOCITY = 45;
-    this.body.allowRotation()
+    // this.body.allowRotation()
   }
 
   create() {
@@ -48,6 +47,9 @@ class Player extends Phaser.GameObjects.Sprite {
     } else {
       this.body.velocity.x = 0;
     }
+    var pointer = this.scene.input.mousePointer
+    var mouseAngle = Phaser.Math.Angle.Between(this.body.x,this.body.y, pointer.x, pointer.y)
+
     if(!this.gamePad){
       
       try {
