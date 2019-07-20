@@ -17,23 +17,25 @@ var Bullet = new Phaser.Class({
     this.speed = 0.25
 
     this.setPosition(shooter.x, shooter.y)
-    this.direction = Math.atan((target.x - this.x) / (target.y - this.y))
+    this.direction = target
+    // this.direction = Math.atan((target.x - this.x) / (target.y - this.y))
 
-    if (target.y >= this.y) {
+    if (target < 270 && target > 90) {
+      console.log("in IF")
       this.xSpeed = this.speed * Math.sin(this.direction)
       this.ySpeed = this.speed * Math.cos(this.direction)
     } else {
+      console.log("in ELSE")
       this.xSpeed = - this.speed * Math.sin(this.direction)
       this.ySpeed = - this.speed * Math.cos(this.direction)
     }
-
     this.rotation = shooter.rotation
     this.born = 0
   },
 
   update: function (time, delta) {
-    this.x += this.speed * delta
-    this.y += this.speed * delta
+    this.x += this.xSpeed * delta
+    this.y += this.ySpeed * delta
 
     this.born += delta
     if (this.born > 1800) {

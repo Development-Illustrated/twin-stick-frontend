@@ -54,15 +54,15 @@ class Player extends Phaser.GameObjects.Sprite {
     }
 
     if (this.space.isDown) {
-      var crosshair = this
-      this.weapon.fireWeapon(this, crosshair, Date.now())
+      var pointer = this.scene.input.mousePointer
+      var mouseAngle = Phaser.Math.Angle.Between(this.body.x,this.body.y, pointer.x, pointer.y)
+      this.weapon.fireWeapon(this, mouseAngle, Date.now())
     }
-    var pointer = this.scene.input.mousePointer
-    var mouseAngle = Phaser.Math.Angle.Between(this.body.x,this.body.y, pointer.x, pointer.y)
-
+   
     if(!this.gamePad){
       try {
         this.gamePad = this.scene.input.gamepad.pad1;
+        this.gamePad.setAxisThreshold(0.3)
       } catch (TypeError) {
         console.log(TypeError);
         //no gamepad
@@ -75,6 +75,11 @@ class Player extends Phaser.GameObjects.Sprite {
       
       //Use the angle to do the fire method
       var newAngle = this.getAngle()
+      if (newAngle != 0){
+        //If the right stick is non-zero, "Let the Shoosting begins"
+        console.log(newAngle)
+        this.weapon.fireWeapon(this, newAngle, Date.now())
+      }
       
     }
 

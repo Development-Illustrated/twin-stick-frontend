@@ -22,10 +22,10 @@ var Weapon = new Phaser.Class({
     }
 
     if (bullet) {
-        var target = {x: player.x - 100, y: player.y}
+        
         player.lastFired = time
-        bullet.fire(player, target)
-        // bullet.fire(player, crosshair)
+        // bullet.fire(player, target)
+        bullet.fire(player, crosshair)
     }
   },
 
