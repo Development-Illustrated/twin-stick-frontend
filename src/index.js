@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+
 import BootScene from "./scenes/Boot";
 
 var config = {
