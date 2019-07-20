@@ -29,6 +29,8 @@ class GameScene extends Phaser.Scene {
     );
     this.load.image("bullet", bulletImg);
 
+    this.load.audio("background_music", "src/assets/audio/Creepy-Action.mp3", "../assets/audio/Creepy-Action.ogg")
+
     this.load.spritesheet("enemy", enemySprites, {
       frameWidth: 20,
       frameHeight: 32,
@@ -49,6 +51,13 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
     this.buildingLayer.setCollisionBetween(0, 9999);
+    //Set music
+    var music = this.sound.add("background_music")
+    music.play({
+      volume: 0.3,
+      autoplay: true,
+      loop: true
+    })
 
     this.player = new Player({
       scene: this,
