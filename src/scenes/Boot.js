@@ -1,22 +1,59 @@
 import Phaser from "phaser";
-import logoImg from "../assets/logo.png";
+
+import Enemy from "../sprites/Enemy";
+import Player from "../sprites/Player";
+
+import enemyImg from "../assets/enemy.png";
+import playerImg from "../assets/player.png";
 
 class BootScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: "BootScene"
+    });
+
+    this.currentEnemies = 0;
+    this.MAX_ENEMIES = 1;
+  }
+
   preload() {
-    this.load.image("logo", logoImg);
+    this.load.image("enemy", enemyImg);
+    this.load.image("player", playerImg);
   }
 
   create() {
-    const logo = this.add.image(400, 150, "logo");
-
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1
+    this.player = new Player({
+      scene: this,
+      x: this.sys.game.canvas.width / 2,
+      y: 300
     });
+    this.player.create();
+
+    this.enemies = this.add.group();
+    this.time.addEvent({
+      delay: 100,
+      callback: function() {
+        if (this.currentEnemies <= this.MAX_ENEMIES - 1) {
+          var enemy = new Enemy({
+            scene: this,
+            x: Phaser.Math.Between(0, this.sys.game.canvas.width),
+            y: Phaser.Math.Between(0, this.sys.game.canvas.height)
+          });
+          this.enemies.add(enemy);
+          this.currentEnemies = this.currentEnemies + 1;
+        }
+      },
+      callbackScope: this,
+      loop: true
+    });
+
+    this.physics.add.collider(this.player, this.enemies);
+    this.physics.add.collider(this.enemies, this.enemies);
+  }
+
+  update() {
+    this.player.update();
+    this.enemies.children.entries.map(child => child.update());
   }
 }
 
