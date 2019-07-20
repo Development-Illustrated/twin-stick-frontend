@@ -46,6 +46,9 @@ class BootScene extends Phaser.Scene {
       callbackScope: this,
       loop: true
     });
+
+    this.physics.add.collider(this.player, this.enemies);
+    this.physics.add.collider(this.enemies, this.enemies);
   }
 
   update() {

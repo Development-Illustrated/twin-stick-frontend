@@ -9,19 +9,11 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    // if (Phaser.Math.Distance.Between(
-    //   this.x,
-    //   this.y,
-    //   this.scene.player.x,
-    //   this.scene.player.y
-    // ) < 320) {
-    //   this.state = this.states.CHASE;
-    // }
-    // if (this.state == this.states.CHASE) {
-    var dx = this.scene.player.x - this.x;
-    var dy = this.scene.player.y - this.y;
-    var angle = Math.atan2(dy, dx);
-    var speed = 75;
+    let dx = this.scene.player.x - this.x;
+    let dy = this.scene.player.y - this.y;
+    let angle = Math.atan2(dy, dx);
+    let speed = 75;
+
     this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
   }
 }
