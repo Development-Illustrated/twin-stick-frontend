@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 // --- Pathfinding
 import { js } from "easystarjs";
-import tilemap from "../assets/tilesets/horrormap.json";
+// import tilemap from "../assets/tilesets/horrormap.json";
 
 class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, tileset, health, speed) {
@@ -30,7 +30,20 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.currentNextPointY = null;
     this.enemyDirection = "STOP";
 
-    this.easystar.setGrid(tilemap.colliders);
+
+    // Pathfinding
+    var grid = [];
+    for(var y = 0; y < this.scene.map.height; y++){
+      var col = [];
+      for(var x = 0; x < this.scene.map.width; x++){
+        // In each cell we store the ID of the tile, which corresponds
+        // to its index in the tileset of the map ("ID" field in Tiled)
+        col.push(this.scene.getTiledID(x,y));
+      }
+      grid.push(col);
+    }
+    this.easystar.setGrid(grid);
+    // this.easystar.setGrid(tilemap.colliders);
     this.easystar.setAcceptableTiles([1]);
     this.easystar.setIterationsPerCalculation(1000);
     this.easystar.enableDiagonals(); // Might want to remove this
@@ -67,6 +80,12 @@ class Enemy extends Phaser.GameObjects.Sprite {
       delay: this.timestep,
       callback: function() {
         let self = this;
+        console.log(
+            "enemyX",self.enemyX,
+            "enemyY",self.enemyY,
+            "playerX",self.playerX,
+            "playerY",self.playerY,
+        )
         this.easystar.findPath(
           self.enemyX,
           self.enemyY,
@@ -78,7 +97,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
                 self.currentNextPointX = path[1].x;
                 self.currentNextPointY = path[1].y;
             }
-
             if (
               self.currentNextPointX < self.enemyX &&
               self.currentNextPointY < self.enemyY

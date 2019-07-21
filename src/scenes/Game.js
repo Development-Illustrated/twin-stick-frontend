@@ -68,10 +68,10 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const map = this.make.tilemap({ key: "tile_map" });
-    this.tile_images = map.addTilesetImage("horrorset", "tile_images");
-    this.bgLayer = map.createDynamicLayer("Tile Layer 1", [this.tile_images]);
-    this.buildingLayer = map.createDynamicLayer("Tile Layer 2", [
+      this.map = this.make.tilemap({ key: "tile_map" });
+    this.tile_images = this.map.addTilesetImage("horrorset", "tile_images");
+    this.bgLayer = this.map.createDynamicLayer("Tile Layer 1", [this.tile_images]);
+    this.buildingLayer = this.map.createDynamicLayer("Tile Layer 2", [
       this.tile_images
     ]);
 
@@ -142,6 +142,12 @@ class GameScene extends Phaser.Scene {
     this.player.update();
     this.enemies.children.entries.map(child => child.update());
   }
+    getTiledID(x,y){
+        var tile = this.map.getTileAt(x, y);
+        return tile.index;
+    }
 }
+
+
 
 export default GameScene;
