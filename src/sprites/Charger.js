@@ -7,7 +7,7 @@ import { Charger as Config } from "../config/zombies";
 
 class Charger extends Enemy {
   constructor(scene, x, y) {
-    super(scene, x, y, Config.tileset, Config.health, Config.movementSpeed);
+    super(scene, x, y, Config.tileset, Config.health, Config.movementSpeed,Config.attackSpeed, Config.attackDamage);
 
     this.scene = scene;
     this.animator = new EnemyAnimator(scene, Config, this);

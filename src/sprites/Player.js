@@ -10,7 +10,7 @@ class Player extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 2
+    this.health = 100
     this.PLAYER_VELOCITY = 50;
 
     this.usingPad = false
