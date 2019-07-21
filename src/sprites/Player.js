@@ -8,6 +8,8 @@ class Player extends Phaser.GameObjects.Sprite {
     super(scene, x, y, "player");
     this.scene = scene;
     this.scene.add.existing(this);
+    //Add lighting to the player Sprite
+    // this.setPipeline('Light2D')
     this.scene.physics.world.enableBody(this, 0);
 
     this.PLAYER_VELOCITY = 50;
@@ -17,6 +19,11 @@ class Player extends Phaser.GameObjects.Sprite {
     this.lastFired = null;
     this.body.setBounce(0);
     this.body.setImmovable(); // stop pushing
+
+    //https://www.codeandweb.com/texturepacker/tutorials/how-to-create-light-effects-in-phaser3
+    //Add the lightsource at player location
+    // var light = this.lights.addLight(500,250,200)
+    // this.lights.enable().setAmbientColor(0x555555)
 
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
