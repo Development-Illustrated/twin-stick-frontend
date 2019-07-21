@@ -1,13 +1,24 @@
 import Phaser from "phaser";
-import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
-import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
+
+// Images
+import playerSprites from "../assets/spritesheets/Player.png";
 import bulletImg from "../assets/images/bullet.png";
 import crosshairImg from "../assets/images/crosshair.png";
 import Crosshair from "../sprites/Crosshair";
+
+// Sprites
 import Player from "../sprites/Player";
-import Enemy from "../sprites/Enemy";
+import Swarmer from "../sprites/Swarmer";
+
+// Animators
 import PlayerAnimations from "../animations/player";
-import EnemyAnimations from "../animations/enemy";
+import EnemyAnimator from "../animations/enemy";
+
+// Config
+import { Swarmer as SwarmerConfig } from "../config/zombies";
+
+// Spawner
+import ZombieSpawner from "../spawner/zombies";
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -15,8 +26,8 @@ class GameScene extends Phaser.Scene {
       key: "GameScene"
     });
 
-    this.currentEnemies = 0;
-    this.MAX_ENEMIES = 1;
+    this.enemyAnimator = new EnemyAnimator(this);
+    this.zombieSpawner = new ZombieSpawner(this);
   }
 
   preload() {
@@ -47,11 +58,8 @@ class GameScene extends Phaser.Scene {
       "src/assets/audio/weapons/Gun_loud.ogg"
     );
 
-    this.load.spritesheet("enemy", enemySprites, {
-      frameWidth: 20,
-      frameHeight: 32,
-      startFrame: 1
-    });
+    this.enemyAnimator.preload();
+
     this.load.spritesheet("player", playerSprites, {
       frameWidth: 16,
       frameHeight: 32,
@@ -67,11 +75,12 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
 
-
     //Add weapon sounds
     this.sound.add("9mmGun");
     this.sound.add("loudGun");
     this.buildingLayer.setCollisionBetween(89, 89);
+
+    this.enemyAnimator.create();
 
     //Set music
     var backgroundMusic = this.sound.add("backgroundMusic");
@@ -85,7 +94,7 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.sys.game.canvas.width / 2,
-      y: this.sys.game.canvas.height / 2,
+      y: this.sys.game.canvas.height / 2
     });
     this.player.create();
     this.player.body.setCollideWorldBounds(true);
@@ -98,27 +107,18 @@ class GameScene extends Phaser.Scene {
     })
     this.crosshair.create()
 
+    this.enemyTypes = {
+      swarmer: this.add.group(),
+      hunter: this.add.group(),
+      charger: this.add.group(),
+      spitter: this.add.group(),
+      witch: this.add.group()
+    };
+
     this.enemies = this.add.group();
     this.enemyHitboxes = this.add.group();
-    this.time.addEvent({
-      delay: Phaser.Math.Between(250, 300),
-      callback: function() {
-        if (this.enemies.children.size <= this.MAX_ENEMIES - 1) {
-          var enemy = new Enemy({
-            scene: this,
-            // x: Phaser.Math.Between(0, this.sys.game.canvas.width),
-            // y: Phaser.Math.Between(0, this.sys.game.canvas.height)
-            x: this.sys.game.canvas.width / 2,
-            y: this.sys.game.canvas.height / 2,
-          });
-          enemy.create();
-          this.enemies.add(enemy);
-          this.currentEnemies = this.currentEnemies + 1;
-        }
-      },
-      callbackScope: this,
-      loop: true
-    });
+
+    this.zombieSpawner.spawn();
 
     this.physics.add.collider(this.player, this.enemies);
     this.physics.add.collider(this.enemies, this.enemies);
@@ -129,16 +129,13 @@ class GameScene extends Phaser.Scene {
     let playerAnimations = new PlayerAnimations(this);
     playerAnimations.create();
 
-    let enemyAnimations = new EnemyAnimations(this);
-    enemyAnimations.create();
-
     // Camera
     // set bounds so the camera won't go outside the game world
-    // this.cameras.main
-    //   .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
-    //   .setZoom(4);
+    this.cameras.main
+      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+      .setZoom(4);
     // // make the camera follow the player
-    // this.cameras.main.startFollow(this.player);
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {
