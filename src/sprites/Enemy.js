@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 // --- Pathfinding
 import { js } from "easystarjs";
-// import tilemap from "../assets/tilesets/horrormap.json";
+import tilemap from "../assets/tilesets/horrormap.json";
 
 class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, tileset, health, speed) {
@@ -32,7 +32,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
 
     // Pathfinding
-    var grid = [];
+    /*var grid = [];
     for(var y = 0; y < this.scene.map.height; y++){
       var col = [];
       for(var x = 0; x < this.scene.map.width; x++){
@@ -41,9 +41,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
         col.push(this.scene.getTiledID(x,y));
       }
       grid.push(col);
-    }
-    this.easystar.setGrid(grid);
-    // this.easystar.setGrid(tilemap.colliders);
+    }*/
+    // this.easystar.setGrid(grid);
+    this.easystar.setGrid(tilemap.colliders);
     this.easystar.setAcceptableTiles([1]);
     this.easystar.setIterationsPerCalculation(1000);
     this.easystar.enableDiagonals(); // Might want to remove this
@@ -80,12 +80,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
       delay: this.timestep,
       callback: function() {
         let self = this;
-        console.log(
-            "enemyX",self.enemyX,
-            "enemyY",self.enemyY,
-            "playerX",self.playerX,
-            "playerY",self.playerY,
-        )
         this.easystar.findPath(
           self.enemyX,
           self.enemyY,
@@ -157,10 +151,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
   update() {
       this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
-    this.playerX = Math.round(this.scene.player.x / 32);
-    this.playerY = Math.round(this.scene.player.y / 32);
-    this.enemyX = Math.floor(this.body.position.x / 32);
-    this.enemyY = Math.floor(this.body.position.y / 32);
+    this.playerX = Math.abs(Math.ceil(this.scene.player.x / 32));
+    this.playerY = Math.abs(Math.ceil(this.scene.player.y / 32));
+    this.enemyX = Math.abs(Math.ceil(this.body.position.x / 32));
+    this.enemyY = Math.abs(Math.ceil(this.body.position.y / 32));
 
     // this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     if (this.enemyX != this.playerX || this.enemyY != this.playerY) {

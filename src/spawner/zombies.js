@@ -35,8 +35,8 @@ class Zombie {
           console.log("swarmer spawned");
           var enemy = new Swarmer(
             this.scene,
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
@@ -62,8 +62,8 @@ class Zombie {
           console.log("hunter spawned");
           var enemy = new Hunter(
             this.scene,
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
@@ -89,8 +89,8 @@ class Zombie {
           console.log("charger spawned");
           var enemy = new Charger(
             this.scene,
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
@@ -116,8 +116,8 @@ class Zombie {
           console.log("spitter spawned");
           var enemy = new Spitter(
             this.scene,
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
@@ -141,8 +141,8 @@ class Zombie {
           console.log("witch spawned");
           var enemy = new Witch(
             this.scene,
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
+            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
