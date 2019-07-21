@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import playerImg from "../assets/images/player_j.png";
 import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
 import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
 import bulletImg from "../assets/images/bullet.png";
@@ -15,7 +14,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 50;
+    this.MAX_ENEMIES = 1;
   }
 
   preload() {
@@ -65,6 +64,7 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
 
+
     //Add weapon sounds
     this.sound.add("9mmGun");
     this.sound.add("loudGun");
@@ -82,7 +82,7 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.sys.game.canvas.width / 2,
-      y: 300
+      y: this.sys.game.canvas.height / 2,
     });
 
     this.player.create();
@@ -97,8 +97,10 @@ class GameScene extends Phaser.Scene {
         if (this.enemies.children.size <= this.MAX_ENEMIES - 1) {
           var enemy = new Enemy({
             scene: this,
-            x: Phaser.Math.Between(0, this.sys.game.canvas.width),
-            y: Phaser.Math.Between(0, this.sys.game.canvas.height)
+            // x: Phaser.Math.Between(0, this.sys.game.canvas.width),
+            // y: Phaser.Math.Between(0, this.sys.game.canvas.height)
+            x: this.sys.game.canvas.width / 2,
+            y: this.sys.game.canvas.height / 2,
           });
           enemy.create();
           this.enemies.add(enemy);
@@ -123,11 +125,11 @@ class GameScene extends Phaser.Scene {
 
     // Camera
     // set bounds so the camera won't go outside the game world
-    this.cameras.main
-      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
-      .setZoom(4);
-    // make the camera follow the player
-    this.cameras.main.startFollow(this.player);
+    // this.cameras.main
+    //   .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+    //   .setZoom(4);
+    // // make the camera follow the player
+    // this.cameras.main.startFollow(this.player);
   }
 
   update() {

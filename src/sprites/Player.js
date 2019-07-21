@@ -91,7 +91,6 @@ class Player extends Phaser.GameObjects.Sprite {
         this.gamePad = this.scene.input.gamepad.pad1;
         this.gamePad.setAxisThreshold(0.3);
       } catch (TypeError) {
-        console.log(TypeError);
         //no gamepad
       }
     } else {
