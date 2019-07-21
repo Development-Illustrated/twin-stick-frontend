@@ -9,7 +9,7 @@ class Player extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 10
+    this.health = 2
     this.PLAYER_VELOCITY = 50;
   }
 
@@ -50,6 +50,7 @@ class Player extends Phaser.GameObjects.Sprite {
       null
     );
 
+    this.hitbox.parent = this
     this.hitbox.setSize(16, 28, false);
     this.hitbox.setVisible(false);
 

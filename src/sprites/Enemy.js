@@ -8,10 +8,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
     this.health = 1;
     this.damage = 1;
-    this.attackSpeed = 5000;
+    this.attackSpeed = 2000;
+    this.attacking = false;
     //Attack sounds
     this.attackSound = this.scene.sound.add("zombieAttack")
-    console.log(this.attackSound)
   }
 
   create() {
@@ -47,7 +47,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
     let dy = this.scene.player.y - this.y;
     let angle = Math.atan2(dy, dx);
     let speed = 35;
-    this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
+    if(!this.attacking){
+      this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
+    }
+    
 
     // move hitbox
     this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
@@ -138,18 +141,17 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
   attack(attacker, target){
     var time = Date.now()
-    // console.log("time " + time)
-    // console.log(attacker.lastAttacked + attacker.attackSpeed)
     if(time > attacker.lastAttacked + attacker.attackSpeed )
     {
-      console.log("Sounds play?")
-      console.log(attacker.attackSound.play({
+      attacker.attackSound.play({
         volume: 1.0
-      }))
-      target.health -= attacker.damage
-      console.log("Target HP: "+ target.health)
-      if(target.health <= 0){
-        target.destroy()
+      })
+       
+      target.parent.health -= attacker.damage
+      console.log("Target HP: "+ target.parent.health)
+      if(target.parent.health <= 0){
+        // target.parent.destroy()
+        // target.destroy()
       }
       attacker.lastAttacked = Date.now()
     }
