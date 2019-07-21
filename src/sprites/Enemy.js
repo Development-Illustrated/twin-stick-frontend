@@ -29,7 +29,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
         // Pathfinding
         easystar.setGrid(tilemap.colliders);
         easystar.setAcceptableTiles([1]);
+        easystar.setIterationsPerCalculation(1000);
         easystar.enableDiagonals(); // Might want to remove this
+        easystar.enableCornerCutting(); // Might want to remove this
     }
 
     create() {
@@ -58,15 +60,13 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.hitbox.body.setBounce(0);
 
         setInterval(function() {
-            console.log("Running path find");
             easystar.findPath(enemyX, enemyY, playerX, playerY, function (path) {
+                console.log("PATH:", path);
                 if (path === null) {
                     console.log("The path to the destination point was not found.");
                 }
 
                 if (path) {
-                    console.log("WE got a path: ", path);
-                    console.log('going from ('+enemyX+','+enemyY+') to ('+path[1].x+','+path[1].y+')');
                     currentNextPointX = path[1].x;
                     currentNextPointY = path[1].y;
                 }
@@ -100,7 +100,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
                 }
             });
             easystar.calculate();
-
         }, timestep);
     }
 
@@ -114,50 +113,38 @@ class Enemy extends Phaser.GameObjects.Sprite {
         let speed = 35;
         console.log("EnemyDirection:", enemyDirection);
         // this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
-        if (enemyDirection == "N") {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = -speed;
+        if (enemyX != playerX || enemyY != playerY) {
+            if (enemyDirection == "N") {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = -speed;
+            } else if (enemyDirection == "S") {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = speed;
+            } else if (enemyDirection == "E") {
+                this.body.velocity.x = speed;
+                this.body.velocity.y = 0;
+            } else if (enemyDirection == "W") {
+                this.body.velocity.x = -speed;
+                this.body.velocity.y = 0;
+            } else if (enemyDirection == "NE") {
+                this.body.velocity.x = speed;
+                this.body.velocity.y = -speed;
+            } else if (enemyDirection == "SE") {
+                this.body.velocity.x = speed;
+                this.body.velocity.y = speed;
+            } else if (enemyDirection == "SW") {
+                this.body.velocity.x = -speed;
+                this.body.velocity.y = speed;
+            } else if (enemyDirection == "NW") {
+                this.body.velocity.x = -speed;
+                this.body.velocity.y = -speed;
+            } else if (enemyDirection == "STOP") {
+                this.body.velocity.x = 0;
+                this.body.velocity.y = 0;
+            }
         }
-        else if (enemyDirection == "S")
-        {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = speed;
-        }
-        else if (enemyDirection == "E") {
-            this.body.velocity.x = speed;
-            this.body.velocity.y = 0;
-        }
-        else if (enemyDirection == "W") {
-            this.body.velocity.x = -speed;
-            this.body.velocity.y = 0;
-        }
-        else if (enemyDirection == "NE")
-        {
-            this.body.velocity.x = speed;
-            this.body.velocity.y = -speed;
-        }
-        else if (enemyDirection == "SE") {
-            this.body.velocity.x = speed;
-            this.body.velocity.y = speed;
-        }
-        else if (enemyDirection == "SW") {
-            this.body.velocity.x = -speed;
-            this.body.velocity.y = speed;
-        }
-        else if (enemyDirection == "NW") {
-            this.body.velocity.x = -speed;
-            this.body.velocity.y = -speed;
-        }
-        else if (enemyDirection == "STOP") {
-            this.body.velocity.x = 0;
-            this.body.velocity.y = 0;
-        }
-
-        console.log("X: ", this.body.velocity.x);
-        console.log("Y: ", this.body.velocity.y);
-
         //move hitbox
-        // this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
+        this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
         if (this.body.velocity.y < 0) {
             // left
