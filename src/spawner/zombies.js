@@ -36,7 +36,6 @@ class Zombie {
           // get random tile
           let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
 
-          console.log("swarmer spawned");
           var enemy = new Swarmer(
             this.scene,
             this.scene.spawnTiles[i].pixelX,
@@ -69,7 +68,6 @@ class Zombie {
           HunterConfig.maxAlive - 1
         ) {
           let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
-          console.log("hunter spawned");
           var enemy = new Hunter(
             this.scene,
             this.scene.spawnTiles[i].pixelX,
@@ -102,7 +100,6 @@ class Zombie {
           ChargerConfig.maxAlive - 1
         ) {
           let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
-          console.log("charger spawned");
           var enemy = new Charger(
             this.scene,
             this.scene.spawnTiles[i].pixelX,
@@ -135,7 +132,6 @@ class Zombie {
           SpitterConfig.maxAlive - 1
         ) {
           let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
-          console.log("spitter spawned");
           var enemy = new Spitter(
             this.scene,
             this.scene.spawnTiles[i].pixelX,
@@ -168,7 +164,6 @@ class Zombie {
           WitchConfig.maxAlive - 1
         ) {
           let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
-          console.log("witch spawned");
           var enemy = new Witch(
             this.scene,
             this.scene.spawnTiles[i].pixelX,
