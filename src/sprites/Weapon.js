@@ -17,9 +17,7 @@ class Weapon {
     if (bulletHit.active === true && characterHit.active === true) {
       characterHit.parent.health =
         characterHit.parent.health - bulletHit.damage;
-      console.log("Enemy health:", characterHit.parent.health);
       if (characterHit.parent.health <= 0) {
-        console.log(bulletHit);
         characterHit.parent.destroy();
         characterHit.destroy();
       }

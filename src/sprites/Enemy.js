@@ -214,7 +214,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
       });
 
       target.parent.health -= attacker.attackDamage;
-      console.log("Player HP: " + target.parent.health);
       if (target.parent.health <= 0) {
         // target.parent.destroy()
         // target.destroy()
