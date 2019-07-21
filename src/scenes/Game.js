@@ -3,6 +3,8 @@ import Phaser from "phaser";
 // Images
 import playerSprites from "../assets/spritesheets/Player.png";
 import bulletImg from "../assets/images/bullet.png";
+import crosshairImg from "../assets/images/crosshair.png";
+import Crosshair from "../sprites/Crosshair";
 
 // Sprites
 import Player from "../sprites/Player";
@@ -38,6 +40,7 @@ class GameScene extends Phaser.Scene {
       "../src/assets/tilesets/horrormap.json"
     );
     this.load.image("bullet", bulletImg);
+    this.load.image("crosshair", crosshairImg);
 
     this.load.audio(
       "backgroundMusic",
@@ -93,10 +96,16 @@ class GameScene extends Phaser.Scene {
       x: this.sys.game.canvas.width / 2,
       y: this.sys.game.canvas.height / 2
     });
-
     this.player.create();
     this.player.body.setCollideWorldBounds(true);
     this.player.onWorldBounds = true;
+
+    this.crosshair = new Crosshair({
+      scene: this,
+      x: this.player.x,
+      y: this.player.y
+    })
+    this.crosshair.create()
 
     this.enemyTypes = {
       swarmer: this.add.group(),
