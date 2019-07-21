@@ -20,6 +20,7 @@ var Bullet = new Phaser.Class({
       this.speed,
       this.body.velocity
     );
+    this.setSize(10, 10, false)
     this.body.velocity.x *= 1.25;
     this.body.velocity.y *= 1.25;
     this.direction = target;
