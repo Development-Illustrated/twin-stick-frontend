@@ -3,6 +3,8 @@ import playerImg from "../assets/images/player_j.png";
 import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
 import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
 import bulletImg from "../assets/images/bullet.png";
+import crosshairImg from "../assets/images/crosshair.png";
+import Crosshair from "../sprites/Crosshair";
 import Player from "../sprites/Player";
 import Enemy from "../sprites/Enemy";
 import PlayerAnimations from "../animations/player";
@@ -15,7 +17,7 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 50;
+    this.MAX_ENEMIES = 0;
   }
 
   preload() {
@@ -28,6 +30,7 @@ class GameScene extends Phaser.Scene {
       "../src/assets/tilesets/horrormap.json"
     );
     this.load.image("bullet", bulletImg);
+    this.load.image("crosshair", crosshairImg);
 
     this.load.audio(
       "backgroundMusic",
@@ -84,10 +87,16 @@ class GameScene extends Phaser.Scene {
       x: this.sys.game.canvas.width / 2,
       y: 300
     });
-
     this.player.create();
     this.player.body.setCollideWorldBounds(true);
     this.player.onWorldBounds = true;
+
+    this.crosshair = new Crosshair({
+      scene: this,
+      x: this.player.x,
+      y: this.player.y
+    })
+    this.crosshair.create()
 
     this.enemies = this.add.group();
     this.enemyHitboxes = this.add.group();
@@ -132,6 +141,7 @@ class GameScene extends Phaser.Scene {
 
   update() {
     this.player.update();
+    this.crosshair.update()
     this.enemies.children.entries.map(child => child.update());
   }
 }

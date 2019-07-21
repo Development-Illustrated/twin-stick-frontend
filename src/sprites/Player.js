@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import Weapon from "./Weapon";
+import Crosshair from "./Crosshair";
 
 var gamePad;
 
@@ -78,10 +79,12 @@ class Player extends Phaser.GameObjects.Sprite {
     if (this.space.isDown) {
       var pointer = this.scene.input.mousePointer;
       var mouseAngle = Phaser.Math.Angle.Between(
-        this.body.x,
-        this.body.y,
-        pointer.x,
-        pointer.y
+        this.body.x + (this.body.width / 2),
+        this.body.y + (this.body.height / 2),
+        // pointer.x + this.scene.cameras.main.scrollX,
+        // pointer.y + this.scene.cameras.main.scrollY
+        this.scene.crosshair.x + this.scene.crosshair.halfWidth,
+        this.scene.crosshair.y + this.scene.crosshair.height
       );
       this.weapon.fireWeapon(this, mouseAngle, Date.now());
     }
@@ -90,11 +93,21 @@ class Player extends Phaser.GameObjects.Sprite {
       try {
         this.gamePad = this.scene.input.gamepad.pad1;
         this.gamePad.setAxisThreshold(0.3);
+        this.scene.crosshair.destroy()
       } catch (TypeError) {
-        console.log(TypeError);
+        // console.log(TypeError);
         //no gamepad
+        if (!this.scene.crosshair) {
+          this.scene.crosshair = new Crosshair({
+            scene: this.scene,
+            x: this.x,
+            y: this.y
+          })
+          this.scene.crosshair.create()
+        }
       }
     } else {
+      this.scene.crosshair.destroy()
       //Move the player
       this.body.velocity.x = this.gamePad.leftStick.x * this.PLAYER_VELOCITY;
       this.body.velocity.y = this.gamePad.leftStick.y * this.PLAYER_VELOCITY;

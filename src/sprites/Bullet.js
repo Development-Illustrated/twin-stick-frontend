@@ -14,12 +14,14 @@ var Bullet = new Phaser.Class({
   },
 
   fire: function(shooter, target) {
+
     this.setPosition(shooter.x, shooter.y);
     this.scene.physics.velocityFromRotation(
       target,
       this.speed,
       this.body.velocity
     );
+    this.setSize(10, 10, false)
     this.body.velocity.x *= 1.25;
     this.body.velocity.y *= 1.25;
     this.direction = target;
