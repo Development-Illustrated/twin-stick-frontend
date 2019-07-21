@@ -30,17 +30,24 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.swarmer.children.size <= SwarmerConfig.maxAlive -1
+          this.scene.enemyTypes.swarmer.children.size <=
+          SwarmerConfig.maxAlive - 1
         ) {
-          console.log("swarmer spawned");
+          // get random tile
+          let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
+
           var enemy = new Swarmer(
             this.scene,
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
+            this.scene.spawnTiles[i].pixelX,
+            this.scene.spawnTiles[i].pixelY
           );
           enemy.create();
-          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack");
+          this.scene.physics.add.collider(
+            enemy,
+            this.scene.player.hitbox,
+            enemy.attack
+          );
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.swarmer.add(enemy);
         }
@@ -57,17 +64,22 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.hunter.children.size <= HunterConfig.maxAlive - 1
+          this.scene.enemyTypes.hunter.children.size <=
+          HunterConfig.maxAlive - 1
         ) {
-          console.log("hunter spawned");
+          let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
           var enemy = new Hunter(
             this.scene,
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
+            this.scene.spawnTiles[i].pixelX,
+            this.scene.spawnTiles[i].pixelY
           );
           enemy.create();
-          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack");
+          this.scene.physics.add.collider(
+            enemy,
+            this.scene.player.hitbox,
+            enemy.attack
+          );
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.hunter.add(enemy);
         }
@@ -84,17 +96,22 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.charger.children.size <= ChargerConfig.maxAlive - 1
+          this.scene.enemyTypes.charger.children.size <=
+          ChargerConfig.maxAlive - 1
         ) {
-          console.log("charger spawned");
+          let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
           var enemy = new Charger(
             this.scene,
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
+            this.scene.spawnTiles[i].pixelX,
+            this.scene.spawnTiles[i].pixelY
           );
           enemy.create();
-          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack");
+          this.scene.physics.add.collider(
+            enemy,
+            this.scene.player.hitbox,
+            enemy.attack
+          );
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.charger.add(enemy);
         }
@@ -111,17 +128,22 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.spitter.children.size <= SpitterConfig.maxAlive - 1
+          this.scene.enemyTypes.spitter.children.size <=
+          SpitterConfig.maxAlive - 1
         ) {
-          console.log("spitter spawned");
+          let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
           var enemy = new Spitter(
             this.scene,
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
+            this.scene.spawnTiles[i].pixelX,
+            this.scene.spawnTiles[i].pixelY
           );
           enemy.create();
-          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack");
+          this.scene.physics.add.collider(
+            enemy,
+            this.scene.player.hitbox,
+            enemy.attack
+          );
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.spitter.add(enemy);
         }
@@ -137,16 +159,23 @@ class Zombie {
         WitchConfig.maxRespawn
       ),
       callback: function() {
-        if (this.scene.enemyTypes.witch.children.size <= WitchConfig.maxAlive -1) {
-          console.log("witch spawned");
+        if (
+          this.scene.enemyTypes.witch.children.size <=
+          WitchConfig.maxAlive - 1
+        ) {
+          let i = Phaser.Math.Between(0, this.scene.spawnTiles.length - 1);
           var enemy = new Witch(
             this.scene,
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.width),
-            Phaser.Math.Between(32, this.scene.sys.game.canvas.height)
+            this.scene.spawnTiles[i].pixelX,
+            this.scene.spawnTiles[i].pixelY
           );
           enemy.create();
-          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack");
+          this.scene.physics.add.collider(
+            enemy,
+            this.scene.player.hitbox,
+            enemy.attack
+          );
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.witch.add(enemy);
         }
