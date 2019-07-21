@@ -1,6 +1,9 @@
 import Phaser from "phaser";
 
 import GameScene from "./scenes/Game";
+import LoadingScene from "./scenes/Loading";
+import MainMenuScene from "./scenes/MainMenu";
+import DeathScreenScene from "./scenes/DeathScreen";
 
 var config = {
   type: Phaser.WEBGL,
@@ -10,7 +13,7 @@ var config = {
   input: {
     gamepad: true
   },
-  scene: [GameScene],
+  scene: [LoadingScene, MainMenuScene, GameScene, DeathScreenScene],
   physics: {
     default: "arcade",
     arcade: {

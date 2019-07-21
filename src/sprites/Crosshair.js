@@ -22,16 +22,20 @@ class Crosshair extends Phaser.GameObjects.Sprite {
   create () {
     this.setVisible(false)
 
-    // Pointer lock will only work after mousedown
-    this.scene.sys.game.canvas.addEventListener('mousedown', function () {
-      game.input.mouse.requestPointerLock();
-    });
 
-    // Exit pointer lock when Q or escape (by default) is pressed.
-    this.scene.input.keyboard.on('keydown_Q', function (event) {
-      if (game.input.mouse.locked)
-        game.input.mouse.releasePointerLock();
-    }, 0, this.scene);
+    // REMOVE THE THING THAT LOCKS THE MOUSE TO THE SCREEN
+    // // Pointer lock will only work after mousedown
+    // this.scene.sys.game.canvas.addEventListener('mousedown', function () {
+    //   game.input.mouse.requestPointerLock();
+    // });
+
+    // // console.log(this.scene.input.mouse.removeListener('mousedown'))
+
+    // // Exit pointer lock when Q or escape (by default) is pressed.
+    // this.scene.input.keyboard.on('keydown_Q', function (event) {
+    //   if (game.input.mouse.locked)
+    //     game.input.mouse.releasePointerLock();
+    // }, 0, this.scene);
   }
 
   // Ensures reticle does not move offscreen
@@ -71,12 +75,12 @@ class Crosshair extends Phaser.GameObjects.Sprite {
     } else {
       this.setVisible(true)
       this.scene.input.on('pointermove', function (pointer) {
-        if (this.scene.input.mouse.locked) {
+        // if (this.scene.input.mouse.locked) {
           this.x = pointer.worldX + (pointer.movementX * 0.5)
           this.y = pointer.worldY + (pointer.movementY * 0.5)
 
           this.constrainReticle()
-        }
+        // }
       }, this);
     }
   }

@@ -200,8 +200,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   destroy() {
-    this.scene.score += this.score;
-    this.scene.scoreText.setText("Score: " + this.scene.score);
+    if (this.scene) {
+      this.scene.score += this.score;
+      this.scene.scoreText.setText("Score: " + this.scene.score);
+    }
 
     super.destroy();
   }
@@ -211,11 +213,17 @@ class Enemy extends Phaser.GameObjects.Sprite {
     if (time > attacker.lastAttacked + attacker.attackSpeed) {
       attacker.attackSound.play({
         volume: 1.0
-      });
+      })
 
       target.parent.health -= attacker.attackDamage;
       target.parent.scene.healthText.setText("Health: " + target.parent.health);
-      if (target.parent.health <= 0) {
+
+      target.parent.health -= attacker.attackDamage
+      if(target.parent.health <= 0){
+        if (attacker.scene.input.mouse.locked) {
+          attacker.scene.input.mouse.releasePointerLock();
+        }
+        attacker.scene.scene.start('DeathScreen')
         // target.parent.destroy()
         // target.destroy()
       }
