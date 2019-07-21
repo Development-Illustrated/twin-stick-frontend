@@ -121,14 +121,11 @@ class Enemy extends Phaser.GameObjects.Sprite {
             ) {
               // down
               self.enemyDirection = "S";
-            } else if (
-              self.currentNextPointX < self.enemyX &&
-              self.currentNextPointY > self.enemyY
-            ) {
+            } else if (self.currentNextPointX < self.enemyX && self.currentNextPointY > self.enemyY) {
               // left down
               self.enemyDirection = "SW";
             } else {
-              self.enemyDirection = "STOP";
+              self.enemyDirection = "FUCKKNOWS";
             }
           }
         );
@@ -173,6 +170,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
       } else if (this.enemyDirection == "NW") {
         this.body.velocity.x = -this.speed;
         this.body.velocity.y = -this.speed;
+      } else if (this.enemyDirection == "FUCKKNOWS") {
+          let angle = Math.atan2(this.playerY, this.playerX);
+          this.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed);
       } else if (this.enemyDirection == "STOP") {
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
