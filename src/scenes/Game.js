@@ -78,7 +78,7 @@ class GameScene extends Phaser.Scene {
     //Add weapon sounds
     this.sound.add("9mmGun");
     
-    this.buildingLayer.setCollisionBetween(89, 89);
+    this.buildingLayer.setCollisionBetween(89, 128);
 
     this.enemyAnimator.create();
 
