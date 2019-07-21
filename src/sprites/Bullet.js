@@ -14,7 +14,6 @@ var Bullet = new Phaser.Class({
   },
 
   fire: function(shooter, target) {
-
     this.setPosition(shooter.x, shooter.y);
     this.scene.physics.velocityFromRotation(
       target,

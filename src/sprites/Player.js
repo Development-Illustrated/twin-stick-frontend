@@ -12,6 +12,8 @@ class Player extends Phaser.GameObjects.Sprite {
     this.scene.physics.world.enableBody(this, 0);
 
     this.PLAYER_VELOCITY = 50;
+
+    this.usingPad = false
   }
 
   create() {
@@ -81,33 +83,23 @@ class Player extends Phaser.GameObjects.Sprite {
       var mouseAngle = Phaser.Math.Angle.Between(
         this.body.x + (this.body.width / 2),
         this.body.y + (this.body.height / 2),
-        // pointer.x + this.scene.cameras.main.scrollX,
-        // pointer.y + this.scene.cameras.main.scrollY
         this.scene.crosshair.x + this.scene.crosshair.halfWidth,
         this.scene.crosshair.y + this.scene.crosshair.height
       );
       this.weapon.fireWeapon(this, mouseAngle, Date.now());
     }
 
-    if (!this.gamePad) {
+    if (!this.usingPad) {
       try {
         this.gamePad = this.scene.input.gamepad.pad1;
         this.gamePad.setAxisThreshold(0.3);
-        this.scene.crosshair.destroy()
+        this.usingPad = true
       } catch (TypeError) {
         // console.log(TypeError);
         //no gamepad
-        if (!this.scene.crosshair) {
-          this.scene.crosshair = new Crosshair({
-            scene: this.scene,
-            x: this.x,
-            y: this.y
-          })
-          this.scene.crosshair.create()
-        }
+        this.usingPad = false
       }
     } else {
-      this.scene.crosshair.destroy()
       //Move the player
       this.body.velocity.x = this.gamePad.leftStick.x * this.PLAYER_VELOCITY;
       this.body.velocity.y = this.gamePad.leftStick.y * this.PLAYER_VELOCITY;
@@ -115,6 +107,7 @@ class Player extends Phaser.GameObjects.Sprite {
       //Use the angle to do the fire method
       if (this.gamePad.rightStick.x != 0 || this.gamePad.rightStick.y != 0) {
         var newAngle = this.getAngle();
+        this.scene.crosshair.setVisible(true)
         this.weapon.fireWeapon(this, newAngle, Date.now());
       }
     }
@@ -205,6 +198,8 @@ class Player extends Phaser.GameObjects.Sprite {
           break;
       }
     }
+
+    this.scene.crosshair.update()
   }
 
   getAngle() {

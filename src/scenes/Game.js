@@ -141,7 +141,6 @@ class GameScene extends Phaser.Scene {
 
   update() {
     this.player.update();
-    this.crosshair.update()
     this.enemies.children.entries.map(child => child.update());
   }
 }
