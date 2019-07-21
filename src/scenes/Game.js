@@ -23,7 +23,7 @@ class GameScene extends Phaser.Scene {
     super({
       key: "GameScene"
     });
-    
+
     this.enemyAnimator = new EnemyAnimator(this);
     this.zombieSpawner = new ZombieSpawner(this);
   }
@@ -72,7 +72,6 @@ class GameScene extends Phaser.Scene {
       this.tile_images
     ]);
 
-
     //Add weapon sounds
     this.sound.add("9mmGun");
     this.sound.add("loudGun");
@@ -92,7 +91,7 @@ class GameScene extends Phaser.Scene {
     this.player = new Player({
       scene: this,
       x: this.sys.game.canvas.width / 2,
-      y: this.sys.game.canvas.height / 2,
+      y: this.sys.game.canvas.height / 2
     });
 
     this.player.create();
@@ -123,11 +122,11 @@ class GameScene extends Phaser.Scene {
 
     // Camera
     // set bounds so the camera won't go outside the game world
-    // this.cameras.main
-    //   .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
-    //   .setZoom(4);
+    this.cameras.main
+      .setBounds(0, 0, this.sys.game.canvas.width, this.sys.game.canvas.height)
+      .setZoom(4);
     // // make the camera follow the player
-    // this.cameras.main.startFollow(this.player);
+    this.cameras.main.startFollow(this.player);
   }
 
   update() {

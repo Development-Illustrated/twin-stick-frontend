@@ -1,20 +1,8 @@
 import Phaser from "phaser";
 
 // --- Pathfinding
-let timestep = 400;
-let playerX;
-let playerY;
-let enemyX;
-let enemyY;
-let currentNextPointX;
-let currentNextPointY;
-let enemyDirection = "STOP";
 import { js } from "easystarjs";
 import tilemap from "../assets/tilesets/horrormap.json";
-
-// ********************* EasyStar setup *********************
-let easystar;
-let timeStep = 400; // pathway computation time interval in milliseconds
 
 class Enemy extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, tileset, health, speed) {
@@ -27,12 +15,22 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
 
-    easystar = new js();
-    easystar.setGrid(tilemap.colliders);
-    easystar.setAcceptableTiles([1]);
-    easystar.setIterationsPerCalculation(1000);
-    easystar.enableDiagonals(); // Might want to remove this
-    easystar.enableCornerCutting(); // Might want to remove this
+    this.easystar = new js();
+    this.timestep = 400;
+
+    this.playerX = this.scene.player.x;
+    this.playerY = this.scene.player.y;
+    this.enemyX = this.x;
+    this.enemyY = this.y;
+    this.currentNextPointX = null;
+    this.currentNextPointY = null;
+    this.enemyDirection = "STOP";
+
+    this.easystar.setGrid(tilemap.colliders);
+    this.easystar.setAcceptableTiles([1]);
+    this.easystar.setIterationsPerCalculation(1000);
+    this.easystar.enableDiagonals(); // Might want to remove this
+    this.easystar.enableCornerCutting(); // Might want to remove this
   }
 
   create() {
@@ -59,48 +57,83 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.hitbox.body.setImmovable();
     this.hitbox.body.setBounce(0);
 
-    setInterval(function() {
-      easystar.findPath(enemyX, enemyY, playerX, playerY, function(path) {
-        console.log("PATH:", path);
-        if (path === null) {
-          console.log("The path to the destination point was not found.");
-        }
+    this.scene.time.addEvent({
+      delay: this.timestep,
+      callback: function() {
+        let self = this;
+        this.easystar.findPath(
+          self.enemyX,
+          self.enemyY,
+          self.playerX,
+          self.playerY,
+          function(path) {
+            console.log("PATH:", path);
+            if (path === null) {
+              console.log("The path to the destination point was not found.");
+            }
+            if (path) {
+              self.currentNextPointX = path[1].x;
+              self.currentNextPointY = path[1].y;
+            }
 
-        if (path) {
-          currentNextPointX = path[1].x;
-          currentNextPointY = path[1].y;
-        }
-
-        if (currentNextPointX < enemyX && currentNextPointY < enemyY) {
-          // left up
-          enemyDirection = "NW";
-        } else if (currentNextPointX === enemyX && currentNextPointY < enemyY) {
-          // up
-          enemyDirection = "N";
-        } else if (currentNextPointX > enemyX && currentNextPointY < enemyY) {
-          // right up
-          enemyDirection = "NE";
-        } else if (currentNextPointX < enemyX && currentNextPointY === enemyY) {
-          // left
-          enemyDirection = "W";
-        } else if (currentNextPointX > enemyX && currentNextPointY === enemyY) {
-          // right
-          enemyDirection = "E";
-        } else if (currentNextPointX > enemyX && currentNextPointY > enemyY) {
-          // right down
-          enemyDirection = "SE";
-        } else if (currentNextPointX === enemyX && currentNextPointY > enemyY) {
-          // down
-          enemyDirection = "S";
-        } else if (currentNextPointX < enemyX && currentNextPointY > enemyY) {
-          // left down
-          enemyDirection = "SW";
-        } else {
-          enemyDirection = "STOP";
-        }
-      });
-      easystar.calculate();
-    }, timestep);
+            if (
+              self.currentNextPointX < self.enemyX &&
+              self.currentNextPointY < self.enemyY
+            ) {
+              // left up
+              self.enemyDirection = "NW";
+            } else if (
+              self.currentNextPointX === self.enemyX &&
+              self.currentNextPointY < self.enemyY
+            ) {
+              // up
+              self.enemyDirection = "N";
+            } else if (
+              self.currentNextPointX > self.enemyX &&
+              self.currentNextPointY < self.enemyY
+            ) {
+              // right up
+              self.enemyDirection = "NE";
+            } else if (
+              self.currentNextPointX < self.enemyX &&
+              self.currentNextPointY === self.enemyY
+            ) {
+              // left
+              self.enemyDirection = "W";
+            } else if (
+              self.currentNextPointX > self.enemyX &&
+              self.currentNextPointY === self.enemyY
+            ) {
+              // right
+              self.enemyDirection = "E";
+            } else if (
+              self.currentNextPointX > self.enemyX &&
+              self.currentNextPointY > self.enemyY
+            ) {
+              // right down
+              self.enemyDirection = "SE";
+            } else if (
+              self.currentNextPointX === self.enemyX &&
+              self.currentNextPointY > self.enemyY
+            ) {
+              // down
+              self.enemyDirection = "S";
+            } else if (
+              self.currentNextPointX < self.enemyX &&
+              self.currentNextPointY > self.enemyY
+            ) {
+              // left down
+              self.enemyDirection = "SW";
+            } else {
+              self.enemyDirection = "STOP";
+            }
+          }
+        );
+        this.easystar.calculate();
+      },
+      callbackScope: this,
+      loop: true
+    });
   }
 
   update() {
@@ -115,39 +148,39 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
-    playerX = Math.round(this.scene.player.x / 32);
-    playerY = Math.round(this.scene.player.y / 32);
-    enemyX = Math.floor(this.body.position.x / 32);
-    enemyY = Math.floor(this.body.position.y / 32);
+    this.playerX = Math.round(this.scene.player.x / 32);
+    this.playerY = Math.round(this.scene.player.y / 32);
+    this.enemyX = Math.floor(this.body.position.x / 32);
+    this.enemyY = Math.floor(this.body.position.y / 32);
 
-    console.log("EnemyDirection:", enemyDirection);
+    console.log("EnemyDirection:", this.enemyDirection);
     // this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
-    if (enemyX != playerX || enemyY != playerY) {
-      if (enemyDirection == "N") {
+    if (this.enemyX != this.playerX || this.enemyY != this.playerY) {
+      if (this.enemyDirection == "N") {
         this.body.velocity.x = 0;
         this.body.velocity.y = -this.speed;
-      } else if (enemyDirection == "S") {
+      } else if (this.enemyDirection == "S") {
         this.body.velocity.x = 0;
         this.body.velocity.y = this.speed;
-      } else if (enemyDirection == "E") {
+      } else if (this.enemyDirection == "E") {
         this.body.velocity.x = this.speed;
         this.body.velocity.y = 0;
-      } else if (enemyDirection == "W") {
+      } else if (this.enemyDirection == "W") {
         this.body.velocity.x = -this.speed;
         this.body.velocity.y = 0;
-      } else if (enemyDirection == "NE") {
+      } else if (this.enemyDirection == "NE") {
         this.body.velocity.x = this.speed;
         this.body.velocity.y = -this.speed;
-      } else if (enemyDirection == "SE") {
+      } else if (this.enemyDirection == "SE") {
         this.body.velocity.x = this.speed;
         this.body.velocity.y = this.speed;
-      } else if (enemyDirection == "SW") {
+      } else if (this.enemyDirection == "SW") {
         this.body.velocity.x = -this.speed;
         this.body.velocity.y = this.speed;
-      } else if (enemyDirection == "NW") {
+      } else if (this.enemyDirection == "NW") {
         this.body.velocity.x = -this.speed;
         this.body.velocity.y = -this.speed;
-      } else if (enemyDirection == "STOP") {
+      } else if (this.enemyDirection == "STOP") {
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
       }

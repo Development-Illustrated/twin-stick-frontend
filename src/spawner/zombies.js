@@ -30,7 +30,7 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.swarmer.children.size <= SwarmerConfig.maxAlive
+          this.scene.enemyTypes.swarmer.children.size <= SwarmerConfig.maxAlive -1
         ) {
           console.log("swarmer spawned");
           var enemy = new Swarmer(
@@ -55,7 +55,7 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.hunter.children.size <= HunterConfig.maxAlive
+          this.scene.enemyTypes.hunter.children.size <= HunterConfig.maxAlive - 1
         ) {
           console.log("hunter spawned");
           var enemy = new Hunter(
@@ -80,7 +80,7 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.charger.children.size <= ChargerConfig.maxAlive
+          this.scene.enemyTypes.charger.children.size <= ChargerConfig.maxAlive - 1
         ) {
           console.log("charger spawned");
           var enemy = new Charger(
@@ -105,7 +105,7 @@ class Zombie {
       ),
       callback: function() {
         if (
-          this.scene.enemyTypes.spitter.children.size <= SpitterConfig.maxAlive
+          this.scene.enemyTypes.spitter.children.size <= SpitterConfig.maxAlive - 1
         ) {
           console.log("spitter spawned");
           var enemy = new Spitter(
@@ -129,7 +129,7 @@ class Zombie {
         WitchConfig.maxRespawn
       ),
       callback: function() {
-        if (this.scene.enemyTypes.witch.children.size <= WitchConfig.maxAlive) {
+        if (this.scene.enemyTypes.witch.children.size <= WitchConfig.maxAlive -1) {
           console.log("witch spawned");
           var enemy = new Witch(
             this.scene,
