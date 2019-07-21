@@ -14,9 +14,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 1;
-    this.damage = 1;
-    this.attackSpeed = 2000;
+ 
     this.attacking = false;
     //Attack sounds
     this.attackSound = this.scene.sound.add("zombieAttack")
@@ -45,7 +43,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setBounce(1);
 
     this.lastAttacked = Date.now()
-    this.health = 1;
     //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
       this.scene,
@@ -76,9 +73,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
           self.playerX,
           self.playerY,
           function(path) {
-            console.log("PATH:", path);
+            // console.log("PATH:", path);
             if (path === null) {
-              console.log("The path to the destination point was not found.");
+              // console.log("The path to the destination point was not found.");
             }
             if (path) {
               self.currentNextPointX = path[1].x;
@@ -167,7 +164,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.enemyX = Math.floor(this.body.position.x / 32);
     this.enemyY = Math.floor(this.body.position.y / 32);
 
-    console.log("EnemyDirection:", this.enemyDirection);
+    // console.log("EnemyDirection:", this.enemyDirection);
     // this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     if (this.enemyX != this.playerX || this.enemyY != this.playerY) {
       if (this.enemyDirection == "N") {
@@ -209,7 +206,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         volume: 1.0
       })
        
-      target.parent.health -= attacker.damage
+      target.parent.health -= attacker.attackDamage
       console.log("Target HP: "+ target.parent.health)
       if(target.parent.health <= 0){
         // target.parent.destroy()
