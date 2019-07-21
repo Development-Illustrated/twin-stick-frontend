@@ -33,7 +33,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.attackSound = this.scene.sound.add("zombieAttack");
 
     this.easystar = new js();
-    this.timestep = 400;
+    this.timestep = 200;
 
     this.playerX = this.scene.player.x;
     this.playerY = this.scene.player.y;

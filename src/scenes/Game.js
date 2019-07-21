@@ -88,7 +88,7 @@ class GameScene extends Phaser.Scene {
 
     this.score = 0;
 
-    this.buildingLayer.setCollisionBetween(89, 89);
+    this.buildingLayer.setCollisionBetween(89, 128);
 
     this.enemyAnimator.create();
 
