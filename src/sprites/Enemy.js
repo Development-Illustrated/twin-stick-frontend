@@ -34,11 +34,11 @@ class Enemy extends Phaser.GameObjects.Sprite {
         easystar.enableCornerCutting(); // Might want to remove this
     }
 
-    create() {
-        this.body.setSize(10, 6, false);
-        this.body.setOffset(3, 32 - 6);
-        this.body.setBounce(0);
-        this.body.setImmovable(); // stop pushing
+  create() {
+    this.body.setSize(10, 6, false);
+    this.body.setOffset(3, 32 - 6);
+    this.body.setBounce(1);
+    // this.body.setImmovable(); // stop pushing
 
         //hit box
         this.hitbox = new Phaser.GameObjects.Sprite(
