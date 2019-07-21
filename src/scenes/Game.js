@@ -1,12 +1,23 @@
 import Phaser from "phaser";
+
+// Images
 import playerImg from "../assets/images/player_j.png";
-import playerSprites from "../assets/spritesheets/HC_Humans1A.png";
-import enemySprites from "../assets/spritesheets/HC_Zombies1A.png";
+import playerSprites from "../assets/spritesheets/Player.png";
 import bulletImg from "../assets/images/bullet.png";
+
+// Sprites
 import Player from "../sprites/Player";
-import Enemy from "../sprites/Enemy";
+import Swarmer from "../sprites/Swarmer";
+
+// Animators
 import PlayerAnimations from "../animations/player";
-import EnemyAnimations from "../animations/enemy";
+import EnemyAnimator from "../animations/enemy";
+
+// Config
+import { Swarmer as SwarmerConfig } from "../config/zombies";
+
+// Spawner
+import ZombieSpawner from "../spawner/zombies";
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -15,7 +26,10 @@ class GameScene extends Phaser.Scene {
     });
 
     this.currentEnemies = 0;
-    this.MAX_ENEMIES = 50;
+    this.MAX_ENEMIES = 25;
+
+    this.enemyAnimator = new EnemyAnimator(this);
+    this.zombieSpawner = new ZombieSpawner(this);
   }
 
   preload() {
@@ -45,11 +59,8 @@ class GameScene extends Phaser.Scene {
       "src/assets/audio/weapons/Gun_loud.ogg"
     );
 
-    this.load.spritesheet("enemy", enemySprites, {
-      frameWidth: 20,
-      frameHeight: 32,
-      startFrame: 1
-    });
+    this.enemyAnimator.preload();
+
     this.load.spritesheet("player", playerSprites, {
       frameWidth: 16,
       frameHeight: 32,
@@ -70,6 +81,8 @@ class GameScene extends Phaser.Scene {
     this.sound.add("loudGun");
     this.buildingLayer.setCollisionBetween(89, 89);
 
+    this.enemyAnimator.create();
+
     //Set music
     var backgroundMusic = this.sound.add("backgroundMusic");
 
@@ -89,25 +102,18 @@ class GameScene extends Phaser.Scene {
     this.player.body.setCollideWorldBounds(true);
     this.player.onWorldBounds = true;
 
+    this.enemyTypes = {
+      swarmer: this.add.group(),
+      hunter: this.add.group(),
+      charger: this.add.group(),
+      spitter: this.add.group(),
+      witch: this.add.group()
+    };
+
     this.enemies = this.add.group();
     this.enemyHitboxes = this.add.group();
-    this.time.addEvent({
-      delay: Phaser.Math.Between(250, 300),
-      callback: function() {
-        if (this.enemies.children.size <= this.MAX_ENEMIES - 1) {
-          var enemy = new Enemy({
-            scene: this,
-            x: Phaser.Math.Between(0, this.sys.game.canvas.width),
-            y: Phaser.Math.Between(0, this.sys.game.canvas.height)
-          });
-          enemy.create();
-          this.enemies.add(enemy);
-          this.currentEnemies = this.currentEnemies + 1;
-        }
-      },
-      callbackScope: this,
-      loop: true
-    });
+
+    this.zombieSpawner.spawn();
 
     this.physics.add.collider(this.player, this.enemies);
     this.physics.add.collider(this.enemies, this.enemies);
@@ -117,9 +123,6 @@ class GameScene extends Phaser.Scene {
     // Animations
     let playerAnimations = new PlayerAnimations(this);
     playerAnimations.create();
-
-    let enemyAnimations = new EnemyAnimations(this);
-    enemyAnimations.create();
 
     // Camera
     // set bounds so the camera won't go outside the game world

@@ -1,21 +1,22 @@
 import Phaser from "phaser";
 
 class Enemy extends Phaser.GameObjects.Sprite {
-  constructor({ scene, x, y }) {
-    super(scene, x, y, "enemy");
+  constructor(scene, x, y, tileset, health, speed) {
+    super(scene, x, y, tileset);
+
     this.scene = scene;
+    this.health = health;
+    this.speed = speed;
+
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 1;
   }
 
   create() {
     this.body.setSize(10, 6, false);
     this.body.setOffset(3, 32 - 6);
     this.body.setBounce(1);
-    // this.body.setImmovable(); // stop pushing
 
-    //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
       this.scene,
       this.body.x,
@@ -31,6 +32,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this.hitbox);
     this.scene.physics.world.enableBody(this.hitbox, 0);
+
     this.hitbox.body.setImmovable();
     this.hitbox.body.setBounce(0);
   }
@@ -39,95 +41,13 @@ class Enemy extends Phaser.GameObjects.Sprite {
     let dx = this.scene.player.x - this.x;
     let dy = this.scene.player.y - this.y;
     let angle = Math.atan2(dy, dx);
-    let speed = 35;
 
-    this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
+    this.body.setVelocity(
+      Math.cos(angle) * this.speed,
+      Math.sin(angle) * this.speed
+    );
 
-    // move hitbox
     this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
-
-    if (this.body.velocity.y < 0) {
-      // left
-      if (this.body.velocity.x < 0) {
-        // which is bigger
-        if (Math.abs(this.body.velocity.y) > Math.abs(this.body.velocity.x)) {
-          // Y is bigger
-          this.anims.play("enemy_up", true);
-          this.lastMoved = "up";
-        } else {
-          // X is bigger
-          this.anims.play("enemy_left", true);
-          this.lastMoved = "left";
-        }
-      }
-      // right
-      else if (this.body.velocity.x > 0) {
-        // which is bigger
-        if (Math.abs(this.body.velocity.y) > this.body.velocity.x) {
-          // Y is bigger
-          this.anims.play("enemy_up", true);
-          this.lastMoved = "up";
-        } else {
-          // X is bigger
-          this.anims.play("enemy_right", true);
-          this.lastMoved = "right";
-        }
-      } else {
-        this.anims.play("enemy_up", true);
-        this.lastMoved = "up";
-      }
-    } else if (this.body.velocity.y > 0) {
-      // left
-      if (this.body.velocity.x < 0) {
-        // which is bigger
-        if (Math.abs(this.body.velocity.y) > Math.abs(this.body.velocity.x)) {
-          // Y is bigger
-          this.anims.play("enemy_down", true);
-          this.lastMoved = "down";
-        } else {
-          // X is bigger
-          this.anims.play("enemy_left", true);
-          this.lastMoved = "left";
-        }
-      }
-      // right
-      else if (this.body.velocity.x > 0) {
-        // which is bigger
-        if (Math.abs(this.body.velocity.y) > this.body.velocity.x) {
-          // Y is bigger
-          this.anims.play("enemy_down", true);
-          this.lastMoved = "down";
-        } else {
-          // X is bigger
-          this.anims.play("enemy_right", true);
-          this.lastMoved = "right";
-        }
-      } else {
-        this.anims.play("enemy_down", true);
-        this.lastMoved = "down";
-      }
-    } else if (this.body.velocity.x < 0) {
-      this.anims.play("enemy_left", true);
-      this.lastMoved = "left";
-    } else if (this.body.velocity.x > 0) {
-      this.anims.play("enemy_right", true);
-      this.lastMoved = "right";
-    } else {
-      switch (this.lastMoved) {
-        case "up":
-          this.anims.play("enemy_still_up");
-          break;
-        case "down":
-          this.anims.play("enemy_still_down");
-          break;
-        case "left":
-          this.anims.play("enemy_still_left");
-          break;
-        case "right":
-          this.anims.play("enemy_still_right");
-          break;
-      }
-    }
   }
 }
 

@@ -16,8 +16,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_still_up",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 37,
-        end: 37
+        start: 10,
+        end: 10
       }),
       frameRate: 0,
       repeat: -1
@@ -25,8 +25,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_still_left",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 13,
-        end: 13
+        start: 4,
+        end: 4
       }),
       frameRate: 0,
       repeat: -1
@@ -34,8 +34,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_still_right",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 25,
-        end: 25
+        start: 8,
+        end: 8
       }),
       frameRate: 0,
       repeat: -1
@@ -52,8 +52,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_left",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 12,
-        end: 14
+        start: 3,
+        end: 5
       }),
       frameRate: 10,
       repeat: -1
@@ -61,8 +61,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_right",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 24,
-        end: 26
+        start: 6,
+        end: 8
       }),
       frameRate: 10,
       repeat: -1
@@ -70,8 +70,8 @@ class PlayerAnimations {
     this.scene.anims.create({
       key: "player_up",
       frames: this.scene.anims.generateFrameNumbers("player", {
-        start: 36,
-        end: 38
+        start: 9,
+        end: 11
       }),
       frameRate: 10,
       repeat: -1
