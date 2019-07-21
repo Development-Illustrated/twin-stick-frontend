@@ -14,9 +14,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 1;
-    this.damage = 1;
-    this.attackSpeed = 2000;
+ 
     this.attacking = false;
     //Attack sounds
     this.attackSound = this.scene.sound.add("zombieAttack")
@@ -45,7 +43,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setBounce(1);
 
     this.lastAttacked = Date.now()
-    this.health = 1;
     //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
       this.scene,
@@ -190,8 +187,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
       attacker.attackSound.play({
         volume: 1.0
       })
-
-      target.parent.health -= attacker.damage
+       
+      target.parent.health -= attacker.attackDamage
       console.log("Target HP: "+ target.parent.health)
       if(target.parent.health <= 0){
         // target.parent.destroy()
