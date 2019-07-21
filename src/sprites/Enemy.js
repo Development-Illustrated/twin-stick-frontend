@@ -200,9 +200,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   destroy() {
-    console.log(this)
-    this.scene.score += this.score;
-    this.scene.scoreText.setText("Score: " + this.scene.score);
+    if (this.scene) {
+      this.scene.score += this.score;
+      this.scene.scoreText.setText("Score: " + this.scene.score);
+    }
 
     super.destroy();
   }
