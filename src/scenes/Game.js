@@ -146,6 +146,17 @@ class GameScene extends Phaser.Scene {
       .setZoom(4);
     // // make the camera follow the player
     this.cameras.main.startFollow(this.player);
+    this.scoreText = this.add.text(
+      this.player.x - 190,
+      this.player.y - 95,
+      "Score: 0",
+      {
+        fontSize: "10px",
+        fill: "#fff"
+      }
+    );
+
+    this.scoreText.setScrollFactor(0, 0);
   }
 
   update() {

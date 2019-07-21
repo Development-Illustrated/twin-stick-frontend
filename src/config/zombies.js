@@ -15,7 +15,7 @@ export const Swarmer = {
   attackDamage: 1,
   minRespawn: 150,
   maxRespawn: 500,
-  maxAlive: 10,
+  maxAlive: 50,
   score: 1
 };
 
@@ -28,7 +28,7 @@ export const Hunter = {
   attackDamage: 2,
   minRespawn: 1250,
   maxRespawn: 2500,
-  maxAlive: 0,
+  maxAlive: 15,
   score: 5
 };
 
@@ -41,7 +41,7 @@ export const Charger = {
   attackDamage: 3,
   minRespawn: 8000,
   maxRespawn: 12000,
-  maxAlive: 0,
+  maxAlive: 5,
   score: 10
 };
 
@@ -54,7 +54,7 @@ export const Spitter = {
   attackDamage: 1,
   minRespawn: 8000,
   maxRespawn: 12000,
-  maxAlive: 0,
+  maxAlive: 4,
   score: 7
 };
 
@@ -67,6 +67,6 @@ export const Witch = {
   attackDamage: 5,
   minRespawn: 30000,
   maxRespawn: 60000,
-  maxAlive: 0,
+  maxAlive: 1,
   score: 50
 };
