@@ -5,12 +5,14 @@ import { js } from "easystarjs";
 import tilemap from "../assets/tilesets/horrormap.json";
 
 class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, tileset, health, speed) {
+  constructor(scene, x, y, tileset, health, speed,attackSpeed, attackDamage) {
     super(scene, x, y, tileset);
 
     this.scene = scene;
     this.health = health;
     this.speed = speed;
+    this.attackSpeed = attackSpeed
+    this.attackDamage = attackDamage
 
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
@@ -43,6 +45,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setBounce(1);
 
     this.lastAttacked = Date.now()
+
     //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
       this.scene,
@@ -182,6 +185,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
   attack(attacker, target){
     var time = Date.now()
+    console.log(attacker.attackSpeed)
     if(time > attacker.lastAttacked + attacker.attackSpeed )
     {
       attacker.attackSound.play({
@@ -196,9 +200,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
       }
       attacker.lastAttacked = Date.now()
     }
-
-
-
   }
 
 }
