@@ -15,6 +15,8 @@ class Player extends Phaser.GameObjects.Sprite {
 
   create() {
     this.lastFired = null;
+    this.body.setBounce(0);
+    this.body.setImmovable(); // stop pushing
 
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
@@ -36,6 +38,25 @@ class Player extends Phaser.GameObjects.Sprite {
     this.weapon.create();
 
     this.gamePad = this.scene.input.gamepad1;
+
+    this.body.setSize(10, 6, false);
+    this.body.setOffset(3, 32 - 6);
+
+    //hit box
+    this.hitbox = new Phaser.GameObjects.Sprite(
+      this.scene,
+      this.body.x,
+      this.body.y,
+      null
+    );
+
+    this.hitbox.setSize(16, 28, false);
+    this.hitbox.setVisible(false);
+
+    this.scene.add.existing(this.hitbox);
+    this.scene.physics.world.enableBody(this.hitbox, 0);
+    this.hitbox.body.setImmovable();
+    this.hitbox.body.setBounce(0);
   }
 
   update() {
@@ -84,6 +105,8 @@ class Player extends Phaser.GameObjects.Sprite {
         this.weapon.fireWeapon(this, newAngle, Date.now());
       }
     }
+    // move hitbox
+    this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
     // ahhhnimations
 

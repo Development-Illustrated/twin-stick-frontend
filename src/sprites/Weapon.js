@@ -6,7 +6,7 @@ const FIRE_RATE = 200;
 var Weapon = new Phaser.Class({
   initialize: function Weapon(scene) {
     this.scene = scene;
-    this.gunSound = this.scene.sound.add("9mmGun")
+    this.gunSound = this.scene.sound.add("9mmGun");
     this.bullet = Bullet;
   },
 
@@ -16,9 +16,11 @@ var Weapon = new Phaser.Class({
 
   damageCharacter: function(characterHit, bulletHit) {
     if (bulletHit.active === true && characterHit.active === true) {
-      characterHit.health = characterHit.health - bulletHit.damage;
-      console.log("Enemy health:", characterHit.health);
-      if (characterHit.health <= 0) {
+      characterHit.parent.health =
+        characterHit.parent.health - bulletHit.damage;
+      console.log("Enemy health:", characterHit.parent.health);
+      if (characterHit.parent.health <= 0) {
+        characterHit.parent.destroy();
         characterHit.destroy();
       }
 
@@ -55,14 +57,14 @@ var Weapon = new Phaser.Class({
     if (bullet) {
       player.lastFired = time;
       this.scene.physics.add.collider(
-        this.scene.enemies,
+        this.scene.enemyHitboxes,
         bullet,
         this.damageCharacter
       );
       bullet.fire(player, crosshair);
       this.gunSound.play({
         volume: 0.1
-      })
+      });
     }
   },
 

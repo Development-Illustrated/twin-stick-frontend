@@ -6,7 +6,33 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 2
+    this.health = 2;
+  }
+
+  create() {
+    this.body.setSize(10, 6, false);
+    this.body.setOffset(3, 32 - 6);
+    this.body.setBounce(0);
+    this.body.setImmovable(); // stop pushing
+
+    //hit box
+    this.hitbox = new Phaser.GameObjects.Sprite(
+      this.scene,
+      this.body.x,
+      this.body.y,
+      null
+    );
+
+    this.hitbox.setSize(16, 28, false);
+    this.hitbox.setVisible(false);
+
+    this.hitbox.parent = this;
+    this.scene.enemyHitboxes.add(this.hitbox);
+
+    this.scene.add.existing(this.hitbox);
+    this.scene.physics.world.enableBody(this.hitbox, 0);
+    this.hitbox.body.setImmovable();
+    this.hitbox.body.setBounce(0);
   }
 
   update() {
@@ -16,6 +42,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
     let speed = 35;
 
     this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
+
+    // move hitbox
+    this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
     if (this.body.velocity.y < 0) {
       // left
