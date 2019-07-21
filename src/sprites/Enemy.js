@@ -28,10 +28,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
         easystar = new js;
         // Pathfinding
         easystar.setGrid(tilemap.colliders);
-        easystar.setAcceptableTiles([1]);
+        easystar.setAcceptableTiles([1, 10, 3, 18, 19, 2, 4]);
         easystar.setIterationsPerCalculation(1000);
-        easystar.enableDiagonals(); // Might want to remove this
-        easystar.enableCornerCutting(); // Might want to remove this
+        // easystar.enableDiagonals(); // Might want to remove this
+        // easystar.enableCornerCutting(); // Might want to remove this
     }
 
   create() {
@@ -62,7 +62,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
         setInterval(function() {
             easystar.findPath(enemyX, enemyY, playerX, playerY, function (path) {
                 console.log("PATH:", path);
-                if (path === null) {
+                if (path === null || path === []) {
                     console.log("The path to the destination point was not found.");
                 }
 
@@ -105,8 +105,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
     update() {
 
-        playerX = Math.round(this.scene.player.x / 32);
-        playerY = Math.round(this.scene.player.y / 32);
+        playerX = Math.floor(this.scene.player.x / 32);
+        playerY = Math.floor(this.scene.player.y / 32);
         enemyX = Math.floor(this.body.position.x / 32);
         enemyY= Math.floor(this.body.position.y / 32);
 
