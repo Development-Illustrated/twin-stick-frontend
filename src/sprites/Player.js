@@ -2,15 +2,15 @@ import Phaser from "phaser";
 import Weapon from "./Weapon";
 import Crosshair from "./Crosshair";
 
-var gamePad;
-
 class Player extends Phaser.GameObjects.Sprite {
   constructor({ scene, x, y }) {
     super(scene, x, y, "player");
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
+
     this.health = 100
+    this.maxHealth = 100
     this.PLAYER_VELOCITY = 50;
 
     this.usingPad = false
@@ -20,6 +20,16 @@ class Player extends Phaser.GameObjects.Sprite {
     this.lastFired = null;
     this.body.setBounce(1);
     // this.body.setImmovable(); // stop pushing
+
+    var backgroundBar = this.scene.add.image(100, 20, 'health-red');
+    backgroundBar.fixedToCamera = true;
+
+    var healthBar = this.scene.add.image(100, 20, 'health-green');
+    healthBar.fixedToCamera = true;
+    healthBar.scale.setDisplaySize(this.health / this.maxHealth, 20);
+
+
+
 
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W

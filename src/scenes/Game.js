@@ -41,6 +41,8 @@ class GameScene extends Phaser.Scene {
     );
     this.load.image("bullet", bulletImg);
     this.load.image("crosshair", crosshairImg);
+    this.load.image('health-green', 'src/assets/images/health-green.png')
+    this.load.image('health-red', 'src/assets/images/health-red.png')
 
     this.load.audio(
       "backgroundMusic",
