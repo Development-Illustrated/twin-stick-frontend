@@ -73,13 +73,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
           self.playerX,
           self.playerY,
           function(path) {
-            // console.log("PATH:", path);
-            if (path === null) {
-              // console.log("The path to the destination point was not found.");
-            }
-            if (path) {
-              self.currentNextPointX = path[1].x;
-              self.currentNextPointY = path[1].y;
+
+            if (path != null && path.length > 0) {
+                self.currentNextPointX = path[1].x;
+                self.currentNextPointY = path[1].y;
             }
 
             if (
@@ -143,28 +140,13 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-    let dx = this.scene.player.x - this.x;
-    let dy = this.scene.player.y - this.y;
-    let angle = Math.atan2(dy, dx);
-    let speed = 35;
-    if(!this.attacking){
-      this.body.setVelocity(
-        Math.cos(angle) * this.speed,
-        Math.sin(angle) * this.speed
-      );
-    }
-    
-
-    
-
-    this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
+      this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
     this.playerX = Math.round(this.scene.player.x / 32);
     this.playerY = Math.round(this.scene.player.y / 32);
     this.enemyX = Math.floor(this.body.position.x / 32);
     this.enemyY = Math.floor(this.body.position.y / 32);
 
-    // console.log("EnemyDirection:", this.enemyDirection);
     // this.body.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);
     if (this.enemyX != this.playerX || this.enemyY != this.playerY) {
       if (this.enemyDirection == "N") {
@@ -215,8 +197,8 @@ class Enemy extends Phaser.GameObjects.Sprite {
       attacker.lastAttacked = Date.now()
     }
 
-    
-    
+
+
   }
 
 }
