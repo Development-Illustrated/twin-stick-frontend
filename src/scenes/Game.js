@@ -53,9 +53,9 @@ class GameScene extends Phaser.Scene {
       "src/assets/audio/weapons/9_mm_gunshot.ogg"
     );
     this.load.audio(
-      "loudGun",
-      "src/assets/audio/weapons/Gun_loud.mp3",
-      "src/assets/audio/weapons/Gun_loud.ogg"
+      "zombieAttack",
+      "src/assets/audio/zombies/Zombie_Attack_Sound.wav",
+      "src/assets/audio/zombies/Zombie_Attack_Sound.ogg"
     );
 
     this.enemyAnimator.preload();
@@ -77,7 +77,7 @@ class GameScene extends Phaser.Scene {
 
     //Add weapon sounds
     this.sound.add("9mmGun");
-    this.sound.add("loudGun");
+    
     this.buildingLayer.setCollisionBetween(89, 89);
 
     this.enemyAnimator.create();
