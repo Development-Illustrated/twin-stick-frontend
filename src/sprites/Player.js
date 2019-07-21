@@ -15,8 +15,8 @@ class Player extends Phaser.GameObjects.Sprite {
 
   create() {
     this.lastFired = null;
-    this.body.setBounce(0);
-    this.body.setImmovable(); // stop pushing
+    this.body.setBounce(1);
+    // this.body.setImmovable(); // stop pushing
 
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W

@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Bullet from "./Bullet";
 
-const FIRE_RATE = 200;
+const FIRE_RATE = 100;
 
 var Weapon = new Phaser.Class({
   initialize: function Weapon(scene) {
