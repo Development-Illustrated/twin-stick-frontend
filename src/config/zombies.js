@@ -15,7 +15,7 @@ export const Swarmer = {
   attackDamage: 0,
   minRespawn: 150,
   maxRespawn: 500,
-  maxAlive: 50
+  maxAlive: 10
 };
 
 export const Hunter = {
