@@ -40,7 +40,7 @@ class Zombie {
           );
           enemy.create();
           enemy.attackSound = enemy.scene.sound.add("zombieAttack")
-          this.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
+          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.swarmer.add(enemy);
         }
@@ -66,6 +66,8 @@ class Zombie {
             Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
           );
           enemy.create();
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
+          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.hunter.add(enemy);
         }
@@ -91,6 +93,8 @@ class Zombie {
             Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
           );
           enemy.create();
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
+          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.charger.add(enemy);
         }
@@ -116,6 +120,8 @@ class Zombie {
             Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
           );
           enemy.create();
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
+          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.spitter.add(enemy);
         }
@@ -139,6 +145,8 @@ class Zombie {
             Phaser.Math.Between(0, this.scene.sys.game.canvas.height)
           );
           enemy.create();
+          enemy.attackSound = enemy.scene.sound.add("zombieAttack")
+          this.scene.physics.add.collider(enemy,this.scene.player.hitbox, enemy.attack)
           this.scene.enemies.add(enemy);
           this.scene.enemyTypes.witch.add(enemy);
         }
