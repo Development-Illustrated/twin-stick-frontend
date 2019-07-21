@@ -208,15 +208,13 @@ class Enemy extends Phaser.GameObjects.Sprite {
 
   attack(attacker, target) {
     var time = Date.now();
-    console.log(attacker.attackSpeed);
     if (time > attacker.lastAttacked + attacker.attackSpeed) {
       attacker.attackSound.play({
         volume: 1.0
       });
 
-      console.log(target);
       target.parent.health -= attacker.attackDamage;
-      console.log("Target HP: " + target.parent.health);
+      console.log("Player HP: " + target.parent.health);
       if (target.parent.health <= 0) {
         // target.parent.destroy()
         // target.destroy()
