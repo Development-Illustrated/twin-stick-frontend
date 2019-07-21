@@ -18,8 +18,8 @@ class Player extends Phaser.GameObjects.Sprite {
 
   create() {
     this.lastFired = null;
-    this.body.setBounce(0);
-    this.body.setImmovable(); // stop pushing
+    this.body.setBounce(1);
+    // this.body.setImmovable(); // stop pushing
 
     this.keyW = this.scene.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.W
@@ -95,7 +95,6 @@ class Player extends Phaser.GameObjects.Sprite {
         this.gamePad.setAxisThreshold(0.3);
         this.usingPad = true
       } catch (TypeError) {
-        // console.log(TypeError);
         //no gamepad
         this.usingPad = false
       }

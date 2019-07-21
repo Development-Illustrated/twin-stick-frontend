@@ -8,9 +8,9 @@ var Bullet = new Phaser.Class({
     this.speed = 300;
     this.born = 0;
     this.direction = 0;
-    this.damage = 1
-    this.scaleX = 0.5
-    this.scaleY = 0.5
+    this.damage = 1;
+    this.scaleX = 0.5;
+    this.scaleY = 0.5;
   },
 
   fire: function(shooter, target) {
@@ -30,8 +30,8 @@ var Bullet = new Phaser.Class({
     // this.x += this.xSpeed * delta;
     // this.y += this.ySpeed * delta;
     this.born += delta;
-    if (this.born > 1800) {
-      this.destroy()
+    if (this.born > 1000) {
+      this.destroy();
     }
   }
 });
