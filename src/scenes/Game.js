@@ -68,16 +68,26 @@ class GameScene extends Phaser.Scene {
   }
 
   create() {
-      this.map = this.make.tilemap({ key: "tile_map" });
+    this.map = this.make.tilemap({ key: "tile_map" });
     this.tile_images = this.map.addTilesetImage("horrorset", "tile_images");
-    this.bgLayer = this.map.createDynamicLayer("Tile Layer 1", [this.tile_images]);
+    this.bgLayer = this.map.createDynamicLayer("Tile Layer 1", [
+      this.tile_images
+    ]);
     this.buildingLayer = this.map.createDynamicLayer("Tile Layer 2", [
       this.tile_images
     ]);
+    this.spawnTiles = [];
+    this.map.forEachTile(tile => {
+      if (tile.index === 1) {
+        this.spawnTiles.push(tile);
+      }
+    });
 
     //Add weapon sounds
     this.sound.add("9mmGun");
-    
+
+    this.score = 0;
+
     this.buildingLayer.setCollisionBetween(89, 89);
 
     this.enemyAnimator.create();
@@ -104,8 +114,8 @@ class GameScene extends Phaser.Scene {
       scene: this,
       x: this.player.x,
       y: this.player.y
-    })
-    this.crosshair.create()
+    });
+    this.crosshair.create();
 
     this.enemyTypes = {
       swarmer: this.add.group(),
@@ -142,12 +152,10 @@ class GameScene extends Phaser.Scene {
     this.player.update();
     this.enemies.children.entries.map(child => child.update());
   }
-    getTiledID(x,y){
-        var tile = this.map.getTileAt(x, y);
-        return tile.index;
-    }
+  getTiledID(x, y) {
+    var tile = this.map.getTileAt(x, y);
+    return tile.index;
+  }
 }
-
-
 
 export default GameScene;

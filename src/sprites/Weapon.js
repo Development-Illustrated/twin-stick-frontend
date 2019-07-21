@@ -1,47 +1,46 @@
 import Phaser from "phaser";
 import Bullet from "./Bullet";
 
-const FIRE_RATE = 300;
-
-var Weapon = new Phaser.Class({
-  initialize: function Weapon(scene) {
+class Weapon {
+  constructor(scene) {
     this.scene = scene;
     this.gunSound = this.scene.sound.add("9mmGun");
     this.bullet = Bullet;
-  },
+    this.fireRate = 300;
+  }
 
-  destroyBullet: function(bullet, building) {
+  destroyBullet(bullet, building) {
     bullet.destroy();
-  },
+  }
 
-  damageCharacter: function(characterHit, bulletHit) {
+  damageCharacter(characterHit, bulletHit) {
     if (bulletHit.active === true && characterHit.active === true) {
       characterHit.parent.health =
         characterHit.parent.health - bulletHit.damage;
       console.log("Enemy health:", characterHit.parent.health);
       if (characterHit.parent.health <= 0) {
+        console.log(bulletHit);
         characterHit.parent.destroy();
         characterHit.destroy();
       }
-
       bulletHit.destroy();
     }
-  },
+  }
 
-  create: function() {
+  create() {
     this.playerBullets = this.scene.physics.add.group({
       classType: this.bullet,
       runChildUpdate: true
     });
-  },
+  }
 
-  fireWeapon: function(player, crosshair, time) {
+  fireWeapon(player, crosshair, time) {
     var bullet = null;
     if (player.active === false) {
       return;
     }
 
-    if (time > player.lastFired + FIRE_RATE) {
+    if (time > player.lastFired + this.fireRate) {
       bullet = this.playerBullets
         .get()
         .setActive(true)
@@ -66,11 +65,11 @@ var Weapon = new Phaser.Class({
         volume: 0.1
       });
     }
-  },
+  }
 
-  update: function(time, delta) {
+  update(time, delta) {
     this.bullet.update(time, delta);
   }
-});
+}
 
 export default Weapon;

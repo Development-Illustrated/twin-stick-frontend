@@ -5,21 +5,32 @@ import { js } from "easystarjs";
 import tilemap from "../assets/tilesets/horrormap.json";
 
 class Enemy extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, tileset, health, speed,attackSpeed, attackDamage) {
+  constructor(
+    scene,
+    x,
+    y,
+    tileset,
+    health,
+    speed,
+    attackSpeed,
+    attackDamage,
+    score
+  ) {
     super(scene, x, y, tileset);
 
     this.scene = scene;
     this.health = health;
     this.speed = speed;
-    this.attackSpeed = attackSpeed
-    this.attackDamage = attackDamage
+    this.attackSpeed = attackSpeed;
+    this.attackDamage = attackDamage;
+    this.score = score;
 
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
- 
+
     this.attacking = false;
     //Attack sounds
-    this.attackSound = this.scene.sound.add("zombieAttack")
+    this.attackSound = this.scene.sound.add("zombieAttack");
 
     this.easystar = new js();
     this.timestep = 400;
@@ -32,19 +43,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.currentNextPointY = null;
     this.enemyDirection = "STOP";
 
-
-    // Pathfinding
-    /*var grid = [];
-    for(var y = 0; y < this.scene.map.height; y++){
-      var col = [];
-      for(var x = 0; x < this.scene.map.width; x++){
-        // In each cell we store the ID of the tile, which corresponds
-        // to its index in the tileset of the map ("ID" field in Tiled)
-        col.push(this.scene.getTiledID(x,y));
-      }
-      grid.push(col);
-    }*/
-    // this.easystar.setGrid(grid);
     this.easystar.setGrid(tilemap.colliders);
     this.easystar.setAcceptableTiles([1]);
     this.easystar.setIterationsPerCalculation(1000);
@@ -57,7 +55,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.body.setOffset(3, 32 - 6);
     this.body.setBounce(1);
 
-    this.lastAttacked = Date.now()
+    this.lastAttacked = Date.now();
 
     //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
@@ -70,6 +68,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.hitbox.setSize(16, 28, false);
     this.hitbox.setVisible(false);
 
+    this.hitbox.scene = this.scene;
     this.hitbox.parent = this;
     this.scene.enemyHitboxes.add(this.hitbox);
 
@@ -89,10 +88,9 @@ class Enemy extends Phaser.GameObjects.Sprite {
           self.playerX,
           self.playerY,
           function(path) {
-
             if (path != null && path.length > 0) {
-                self.currentNextPointX = path[1].x;
-                self.currentNextPointY = path[1].y;
+              self.currentNextPointX = path[1].x;
+              self.currentNextPointY = path[1].y;
             }
             if (
               self.currentNextPointX < self.enemyX &&
@@ -136,7 +134,10 @@ class Enemy extends Phaser.GameObjects.Sprite {
             ) {
               // down
               self.enemyDirection = "S";
-            } else if (self.currentNextPointX < self.enemyX && self.currentNextPointY > self.enemyY) {
+            } else if (
+              self.currentNextPointX < self.enemyX &&
+              self.currentNextPointY > self.enemyY
+            ) {
               // left down
               self.enemyDirection = "SW";
             } else {
@@ -152,7 +153,7 @@ class Enemy extends Phaser.GameObjects.Sprite {
   }
 
   update() {
-      this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
+    this.hitbox.setPosition(this.body.x + 12, this.body.y - 5);
 
     this.playerX = Math.abs(Math.ceil(this.scene.player.x / 32));
     this.playerY = Math.abs(Math.ceil(this.scene.player.y / 32));
@@ -186,8 +187,11 @@ class Enemy extends Phaser.GameObjects.Sprite {
         this.body.velocity.x = -this.speed;
         this.body.velocity.y = -this.speed;
       } else if (this.enemyDirection == "FUCKKNOWS") {
-          let angle = Math.atan2(this.playerY, this.playerX);
-          this.body.setVelocity(Math.cos(angle) * this.speed, Math.sin(angle) * this.speed);
+        let angle = Math.atan2(this.playerY, this.playerX);
+        this.body.setVelocity(
+          Math.cos(angle) * this.speed,
+          Math.sin(angle) * this.speed
+        );
       } else if (this.enemyDirection == "STOP") {
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
@@ -195,25 +199,24 @@ class Enemy extends Phaser.GameObjects.Sprite {
     }
   }
 
-  attack(attacker, target){
-    var time = Date.now()
-    console.log(attacker.attackSpeed)
-    if(time > attacker.lastAttacked + attacker.attackSpeed )
-    {
+  attack(attacker, target) {
+    var time = Date.now();
+    console.log(attacker.attackSpeed);
+    if (time > attacker.lastAttacked + attacker.attackSpeed) {
       attacker.attackSound.play({
         volume: 1.0
-      })
-       
-      target.parent.health -= attacker.attackDamage
-      console.log("Target HP: "+ target.parent.health)
-      if(target.parent.health <= 0){
+      });
+
+      console.log(target);
+      target.parent.health -= attacker.attackDamage;
+      console.log("Target HP: " + target.parent.health);
+      if (target.parent.health <= 0) {
         // target.parent.destroy()
         // target.destroy()
       }
-      attacker.lastAttacked = Date.now()
+      attacker.lastAttacked = Date.now();
     }
   }
-
 }
 
 export default Enemy;
