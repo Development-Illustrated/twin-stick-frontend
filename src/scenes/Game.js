@@ -155,8 +155,18 @@ class GameScene extends Phaser.Scene {
         fill: "#fff"
       }
     );
+    this.healthText = this.add.text(
+      this.player.x - 190,
+      this.player.y - 80,
+      "Health: 100",
+      {
+        fontSize: "10px",
+        fill: "#fff"
+      }
+    );
 
     this.scoreText.setScrollFactor(0, 0);
+    this.healthText.setScrollFactor(0, 0);
   }
 
   update() {
