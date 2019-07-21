@@ -6,14 +6,14 @@ class Enemy extends Phaser.GameObjects.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.world.enableBody(this, 0);
-    this.health = 2;
+    this.health = 1;
   }
 
   create() {
     this.body.setSize(10, 6, false);
     this.body.setOffset(3, 32 - 6);
-    this.body.setBounce(0);
-    this.body.setImmovable(); // stop pushing
+    this.body.setBounce(1);
+    // this.body.setImmovable(); // stop pushing
 
     //hit box
     this.hitbox = new Phaser.GameObjects.Sprite(
